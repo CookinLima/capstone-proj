@@ -1,13 +1,32 @@
 body {
-  background-color: #5cdb95;
+  background-color: #f2ebeb;
   z-index: -1;
 }
 
-.nav-link {
-  color: #05386b !important;
+li {
+  border-right: 1px solid #ededed !important;
 }
 
-#login-container {
-	background-color: #EDF5E1 !important;
-	
+li:last-child {
+  border-style: hidden !important;
+  float: right !important;
 }
+
+.nav-link:hover {
+  /* font-weight: 600; */
+  /* color: rgb(55, 239, 92) !important; */
+  color: black;
+}
+
+li > a {
+	font-size: 21px;
+}
+
+
+/* .nav-link {
+  color: #05386b !important;
+} */
+
+/* #login-container {
+	background-color: #EDF5E1 !important;
+} */
