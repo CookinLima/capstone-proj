@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -82,8 +84,9 @@
               </ul>
             </li>
           </ul>
+          <% if(session.getAttribute("login") == null) { %>
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-item">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -94,7 +97,7 @@
               >
                 Login
               </a>
-              <ul
+<!--               <ul
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
@@ -103,46 +106,42 @@
                 <li>
                   <a class="dropdown-item" href="#">Something else here</a>
                 </li>
-              </ul>
+              </ul> -->
             </li>
             <button class="btn btn-primary">Register</button>
           </ul>
+          <%  } else { %>
+		          <ul class="navbar-nav ms-auto">
+		            <li class="nav-item dropdown">
+		              <a
+		                class="nav-link dropdown-toggle"
+		                href="#"
+		                id="navbarDropdownMenuLink"
+		                role="button"
+		                data-bs-toggle="dropdown"
+		                aria-expanded="false"
+		              >
+		                <% 
+		                	out.println(session.getAttribute("login"));
+		                %>
+		              </a>
+		              <ul
+		                class="dropdown-menu"
+		                aria-labelledby="navbarDropdownMenuLink"
+		              >
+		                <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+		                <li><a class="dropdown-item" href="#">Logout</a></li>
+		              </ul>
+		            </li>
+		            <button class="btn btn-primary">Register</button>
+		          </ul>
+		  <% } %>
         </div>
       </div>
     </nav>
-    	<% if(session.getAttribute("loginFail" == null)) { %>
-			<div class="modal" tabindex="-1">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title">Modal title</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <p>Modal body text goes here.</p>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Save changes</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-		<% } %>
-	<div id="login-container" class="container w-75 mx-auto">
-	<!-- style="background-color: #EDF5E1 !important; -->
-		<form action="/capstone/validateAdminLogin">
-  			<div class="mb-3">
-				<label for="username" class="form-label">Username</label>
-				<input type="text" class="form-control" placeholder="Username" name="username" required>
-			  </div>
-			  <div class="mb-3">
-			    <label for="exampleInputPassword1" class="form-label">Password</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-	</div>
+    <a class="nav-link" href="/capstone/adminLogin.jsp"
+      >Add Car Details</a
+    >
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -150,3 +149,4 @@
     ></script>
   </body>
 </html>
+    
