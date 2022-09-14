@@ -7,7 +7,7 @@ li {
   border-right: 1px solid #ededed !important;
 }
 
-li:last-child {
+.navbar-nav > li:last-child {
   border-style: hidden !important;
   float: right !important;
 }
