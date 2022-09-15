@@ -8,9 +8,31 @@
 		<servlet-name>validateAdminLogin</servlet-name>
 		<servlet-class>com.ncs.adminController.validateAdminLogin</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>validateCustomerLogin</display-name>
+		<servlet-name>validateCustomerLogin</servlet-name>
+		<servlet-class>com.ncs.customerController.validateCustomerLogin</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>createCustomer</display-name>
+		<servlet-name>createCustomer</servlet-name>
+		<servlet-class>com.ncs.customerController.createCustomer</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>validateCustomerLogin</servlet-name>
+		<url-pattern>/validateCustomerLogin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>createCustomer</servlet-name>
+		<url-pattern>/createCustomer</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

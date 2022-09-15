@@ -104,7 +104,7 @@
 				  </div>
 				</div>
             </li>
-            <button class="btn btn-primary mx-3">Register</button>
+            <a href="customerRegister.jsp"><button class="btn btn-primary mx-3">Register</button></a>
           </ul>
           <%  } else { %>
 		          <ul class="navbar-nav ms-auto me-3">
@@ -129,7 +129,7 @@
 		                <li><a class="dropdown-item" href="logout.jsp">Logout</a></li>
 		              </ul>
 		            </li>
-		            <button class="btn btn-primary mx-3">Register</button>
+		            <a href="customerRegister.jsp"><button class="btn btn-primary mx-3">Register</button></a>
 		          </ul>
 		  <% } %>
         </div>

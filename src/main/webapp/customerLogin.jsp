@@ -17,20 +17,16 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 mx-auto">
+	<div id="login-container" class="container w-50 mt-5 mx-auto">
 	<!-- style="background-color: #EDF5E1 !important; -->
-	<div class="alert alert-danger mt-5" role="alert">
-	  <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->
-	  Wrong username or password. Please try again.
-	</div>
-		<form action="/capstone/validateAdminLogin">
+		<form action="/capstone/validateCustomerLogin">
   			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" placeholder="Username" name="username" required>
 			  </div>
 			  <div class="mb-3">
 			    <label for="exampleInputPassword1" class="form-label">Password</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="password" name="password" required>
+			    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
