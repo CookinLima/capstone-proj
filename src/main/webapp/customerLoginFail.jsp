@@ -18,54 +18,28 @@
     <jsp:param name="login" value=""/>
 	</jsp:include>
 	<div id="login-container" class="container w-50 mt-5 mx-auto">
-	<div class="alert alert-danger mt-1" role="alert">
-	  <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->  
-	<% if(session.getAttribute("fail") == "userExist")  { %>
-		Username already exist. Please choose another username.
-	<% }  else  { %>
-		Server side error, please try again later.
-	<% } %>
-	</div>
-	<!-- style="background-color: #EDF5E1 !important; -->
-		<form action="/capstone/createCustomer" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")' >
-			<div class="row mb-3">
-  				<div class="col">
-  					<label for="firstName" class="form-label">First Name</label>
-    				<input type="text" class="form-control" placeholder="First name" aria-label="First name" name="firstName">
-  				</div>
-  				<div class="col">
-  					<label for="lastName" class="form-label">Last Name</label>
-    				<input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="lastName">
-  				</div>
-			</div>
-  			<div class="mb-3">
-				<label for="username" class="form-label">Username</label>
-				<input type="text" class="form-control" placeholder="Username" name="userName" required>
-			  </div>
-			  <div class="row mb-3">
-  				<div class="col">
+		<div class="alert alert-danger mt-1" role="alert">
+		  <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->  
+		<% if(session.getAttribute("fail") == "userExist")  { %>
+			Username already exist. Please choose another username.
+		<% }  else  { %>
+			Server side error, please try again later.
+		<% } %>
+		</div>
+		<div id="login-container" class="container w-50 mt-5 mx-auto">
+		<!-- style="background-color: #EDF5E1 !important; -->
+			<form action="/capstone/validateCustomerLogin">
+	  			<div class="mb-3">
+					<label for="username" class="form-label">Username</label>
+					<input type="text" class="form-control" placeholder="Username" name="username" required>
+				  </div>
+				  <div class="mb-3">
 				    <label for="exampleInputPassword1" class="form-label">Password</label>
 				    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
-  				</div>
-  				<div class="col">
-				    <label for="exampleInputPassword2" class="form-label">Retype Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword2" name="password2" placeholder="Retype password" required>
-  				</div>
-			</div>
-			  <div class="mb-3">
-				<label for="username" class="form-label">Address</label>
-				<input type="text" class="form-control" placeholder="address" name="adderess" required>
-			  </div>
-			  <div class="mb-3">
-				<label for="username" class="form-label">Phone Number</label>
-				<input type="text" class="form-control" placeholder="Phone number" name="number" required>
-			  </div>
-			  <div class="mb-3">
-				<label for="username" class="form-label">Email</label>
-				<input type="text" class="form-control" placeholder="youremail@email.com" name="email" required>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 	</div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

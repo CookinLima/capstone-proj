@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ncs.adminModel.Admin;
+import com.ncs.customerModel.Customer;
 
 /**
  * Servlet implementation class validateCustomerLogin
@@ -18,17 +19,18 @@ public class validateCustomerLogin extends HttpServlet {
 		String cusUserName = req.getParameter("username");
 		String cusPassword = req.getParameter("password");
 		
-		int checkAdminExist = Admin.checkAccountExist(adminUserName, adminPassword);
-		System.out.println(checkAdminExist);
+		String checkCusExist = Customer.checkAccountExist(cusUserName, cusPassword);
 		
-		 if(checkAdminExist == 1) {
-			HttpSession session = req.getSession(true);
-			session.setAttribute("login", adminUserName);
-			resp.sendRedirect("./adminLoginSuccess.jsp");
-		} else if(checkAdminExist == 2){
+		 if(checkCusExist == "wp" || checkCusExist == "wu") {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", null);
-			resp.sendRedirect("./adminLoginFail.jsp");
+			session.setAttribute("fail", "wp");
+			resp.sendRedirect("./customerLoginFail.jsp");
+		} else {
+			HttpSession session = req.getSession(true);
+			session.setAttribute("login", checkCusExist);
+			session.setAttribute("cusUserName", cusUserName);
+			resp.sendRedirect("./adminLoginSuccess.jsp");
 		}
 	}
 }

@@ -17,7 +17,15 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 mt-3 mx-auto">
+	<div id="login-container" class="container w-50 mt-5 mx-auto">
+	<div class="alert alert-danger mt-1" role="alert">
+	  <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->  
+	<% if(session.getAttribute("fail") == "wp")  { %>
+		Invalid username or password, please try again.
+	<% }  else  { %>
+		Server side error, please try again later.
+	<% } %>
+	</div>
 	<!-- style="background-color: #EDF5E1 !important; -->
 		<form action="/capstone/createCustomer" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")' >
 			<div class="row mb-3">
@@ -30,20 +38,10 @@
     				<input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="lastName">
   				</div>
 			</div>
-			<div class="row mb-3">
-  				<div class="col">
-					<label for="username" class="form-label">Username</label>
-					<input type="text" class="form-control" placeholder="Username" name="userName" required>
-  				</div>
-  				<div class="col">
-  					<label for="lastName" class="form-label">Initial Deposit</label>
-    				<input type="text" class="form-control" placeholder="$" aria-label="Last name" name="deposit" aria-label="Amount (to the nearest dollar)">
-  				</div>
-			</div>
-<!--   			<div class="mb-3">
+  			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" placeholder="Username" name="userName" required>
-			  </div> -->
+			  </div>
 			  <div class="row mb-3">
   				<div class="col">
 				    <label for="exampleInputPassword1" class="form-label">Password</label>

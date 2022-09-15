@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>capstone</display-name>
+	<jsp-config>
+	  <jsp-property-group>
+	    <url-pattern>*.jsp</url-pattern>
+	    <trim-directive-whitespaces>true</trim-directive-whitespaces>
+	  </jsp-property-group>
+	  <init-param>
+	    <param-name>trimSpaces</param-name>
+	    <param-value>true</param-value>
+	</init-param>
+	</jsp-config>
 	<servlet>
 		<description>
 		</description>
@@ -22,6 +32,20 @@
 		<servlet-name>createCustomer</servlet-name>
 		<servlet-class>com.ncs.customerController.createCustomer</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>updateCustomer</display-name>
+		<servlet-name>updateCustomer</servlet-name>
+		<servlet-class>com.ncs.customerController.updateCustomer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>fetchCustomer</display-name>
+		<servlet-name>fetchCustomer</servlet-name>
+		<servlet-class>com.ncs.customerController.fetchCustomer</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
@@ -33,6 +57,14 @@
 	<servlet-mapping>
 		<servlet-name>createCustomer</servlet-name>
 		<url-pattern>/createCustomer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>updateCustomer</servlet-name>
+		<url-pattern>/updateCustomer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>fetchCustomer</servlet-name>
+		<url-pattern>/fetchCustomer</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

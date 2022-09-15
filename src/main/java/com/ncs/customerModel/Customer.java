@@ -194,4 +194,137 @@ public class Customer {
 	}
 		return true;
 	}
+	
+	public static String checkAccountExist(String userName, String password) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+		DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+		System.out.println("Driver loaded successfully");
+		
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+		System.out.println("Connection establised successfully!!");
+		
+//		 store sql command into s
+		String s = "select * from customer_details where username=?";
+		// Allows sql to return statement
+		pstmt = con.prepareStatement(s);
+	
+		// I want to return the result from s
+		pstmt.setString(1, userName);
+		res = pstmt.executeQuery();
+			if(res.next()) {
+				String userPassword = res.getString(5);
+				if(userPassword.equals(password)) {
+//					System.out.println("works");
+					String firstName = res.getString(2);
+					return firstName;
+				} else {
+//					System.out.println("wrong password");
+					return "wp";
+				}
+			}
+		}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+//		System.out.println("Wrong username");
+		return "wu";
+	}
+	
+	public static Customer fetchCustomerDetails(String userName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from customer_details where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, userName);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			System.out.println("before res.next");
+			if(res.next()) {
+				System.out.println("res.next working");
+				String firstName = res.getString(2);
+				String lastName = res.getString(3);
+				String username = res.getString(4);
+				String password = res.getString(5);
+				String address = res.getString(6);
+				String number = res.getString(7);
+				String email = res.getString(8);
+				BigDecimal balance = res.getBigDecimal(9);
+				String occupation = res.getString(10);
+				BigDecimal income = res.getBigDecimal(11);
+				
+				Customer fetchCustomer = Customer.createCustomer(firstName, lastName, username, password, address, number, email, balance, occupation, income);
+				return fetchCustomer;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Customer updateCustomerDetails(String userName,String firstName, String lastName, String password, String address, String number, String email) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "update customer_details set firstname=?, lastname=?, password=?, address=?, number=?, email=? where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, password);
+			pstmt.setString(4, address);
+			pstmt.setString(5, number);
+			pstmt.setString(6, email);
+			pstmt.setString(7, userName);
+			// I want to return the result from s
+			int row = pstmt.executeUpdate();
+			System.out.println("before row");
+			if(row > 0) {
+				System.out.println("updated row");
+//				String firstName = res.getString(2);
+//				String lastName = res.getString(3);
+//				String username = res.getString(4);
+//				String password = res.getString(5);
+//				String address = res.getString(6);
+//				String number = res.getString(7);
+//				String email = res.getString(8);
+//				BigDecimal balance = res.getBigDecimal(9);
+//				String occupation = res.getString(10);
+//				BigDecimal income = res.getBigDecimal(11);
+//				
+//				Customer fetchCustomer = Customer.createCustomer(firstName, lastName, username, password, address, number, email, balance, occupation, income);
+//				return fetchCustomer;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

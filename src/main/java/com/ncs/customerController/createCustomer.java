@@ -35,7 +35,7 @@ public class createCustomer extends HttpServlet {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", null);
 			session.setAttribute("fail", "userExist");
-			resp.sendRedirect("./customerLoginFail.jsp");
+			resp.sendRedirect("./customerRegisterFail.jsp");
 		}
 	}
 }

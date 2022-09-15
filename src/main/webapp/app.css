@@ -7,6 +7,11 @@ li {
   border-right: 1px solid #ededed !important;
 }
 
+.user-li {
+	border-style: hidden !important;	
+}
+
+
 .navbar-nav > li:last-child {
   border-style: hidden !important;
   float: right !important;

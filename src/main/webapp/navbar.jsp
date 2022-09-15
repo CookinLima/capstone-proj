@@ -40,7 +40,6 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Deposit</a></li>
                 <li><a class="dropdown-item" href="#">Withdrawal</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Transfer</a>
@@ -97,7 +96,7 @@
 				      	</div>
 				        <div class="d-flex flex-column justify-content-center">
 				        	<h5>Already a customer?</h5>
-				        	<input type="button" onclick="location.href='#';" value=Customer class="btn btn-primary">
+				        	<input type="button" onclick="location.href='/capstone/customerLogin.jsp';" value=Customer class="btn btn-primary">
 				        </div>
 				      </div>
 				    </div>
@@ -108,7 +107,7 @@
           </ul>
           <%  } else { %>
 		          <ul class="navbar-nav ms-auto me-3">
-		            <li class="nav-item dropdown">
+		            <li class="nav-item dropdown user-li">
 		              <a
 		                class="nav-link dropdown-toggle"
 		                href="#"
@@ -125,7 +124,7 @@
 		                class="dropdown-menu"
 		                aria-labelledby="navbarDropdownMenuLink"
 		              >
-		                <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+		                <li><a class="dropdown-item" href="/capstone/fetchCustomer">Edit Profile</a></li>
 		                <li><a class="dropdown-item" href="logout.jsp">Logout</a></li>
 		              </ul>
 		            </li>
