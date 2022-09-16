@@ -119,7 +119,7 @@ public class Customer {
 			email, balance, occupation,income);
 	}
 	
-	public static int addCustomer(String firstName, String lastName, String userName, String password, String address, String number, String email) {
+	public static int addCustomer(String firstName, String lastName, String userName, String password, String address, String number, String email, String cusBalance) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -133,7 +133,7 @@ public class Customer {
 			System.out.println("Connection establised successfully!!");
 			
 //			store sql command into s
-			String s = "insert into customer_details(firstname, lastname, username, password, address, number, email) values(?,?,?,?,?,?,?)";
+			String s = "insert into customer_details(firstname, lastname, username, password, address, number, email, balance) values(?,?,?,?,?,?,?,?)";
 			// Allows sql to return statement
 			pstmt = con.prepareStatement(s);
 			// I want to return the result from s
@@ -145,7 +145,9 @@ public class Customer {
 			pstmt.setString(5, address);
 			pstmt.setString(6, number);
 			pstmt.setString(7, email);
+			pstmt.setString(8, cusBalance);
 			
+			System.out.println(cusBalance);
 			boolean checkExist = checkUserNameExist(userName);
 			if(checkExist) {
 				int rows = pstmt.executeUpdate();
@@ -263,11 +265,13 @@ public class Customer {
 				String address = res.getString(6);
 				String number = res.getString(7);
 				String email = res.getString(8);
-				BigDecimal balance = res.getBigDecimal(9);
+//				Need to convert string to bigdecimal first
+				String balance = res.getString(9);
+				BigDecimal balanceToDecimal = new BigDecimal(balance);
 				String occupation = res.getString(10);
 				BigDecimal income = res.getBigDecimal(11);
 				
-				Customer fetchCustomer = Customer.createCustomer(firstName, lastName, username, password, address, number, email, balance, occupation, income);
+				Customer fetchCustomer = Customer.createCustomer(firstName, lastName, username, password, address, number, email, balanceToDecimal, occupation, income);
 				return fetchCustomer;
 			}
 			
@@ -278,7 +282,7 @@ public class Customer {
 		return null;
 	}
 	
-	public static Customer updateCustomerDetails(String userName,String firstName, String lastName, String password, String address, String number, String email) {
+	public static Customer updateCustomerDetails(String userName,String firstName, String lastName, String address, String number, String email) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -291,34 +295,23 @@ public class Customer {
 			System.out.println("Connection establised successfully!!");
 			
 			// store sql command into s
-			String s = "update customer_details set firstname=?, lastname=?, password=?, address=?, number=?, email=? where username=?";
+			String s = "update customer_details set firstname=?, lastname=?, address=?, number=?, email=? where username=?";
 			// Allows sql to return statement
 			pstmt = con.prepareStatement(s);
 			pstmt.setString(1, firstName);
 			pstmt.setString(2, lastName);
-			pstmt.setString(3, password);
-			pstmt.setString(4, address);
-			pstmt.setString(5, number);
-			pstmt.setString(6, email);
-			pstmt.setString(7, userName);
+			pstmt.setString(3, address);
+			pstmt.setString(4, number);
+			pstmt.setString(5, email);
+			pstmt.setString(6, userName);
 			// I want to return the result from s
 			int row = pstmt.executeUpdate();
 			System.out.println("before row");
 			if(row > 0) {
 				System.out.println("updated row");
-//				String firstName = res.getString(2);
-//				String lastName = res.getString(3);
-//				String username = res.getString(4);
-//				String password = res.getString(5);
-//				String address = res.getString(6);
-//				String number = res.getString(7);
-//				String email = res.getString(8);
-//				BigDecimal balance = res.getBigDecimal(9);
-//				String occupation = res.getString(10);
-//				BigDecimal income = res.getBigDecimal(11);
-//				
-//				Customer fetchCustomer = Customer.createCustomer(firstName, lastName, username, password, address, number, email, balance, occupation, income);
-//				return fetchCustomer;
+				
+				Customer fetchCustomer = Customer.fetchCustomerDetails(userName);
+				return fetchCustomer;
 			}
 			
 		}
@@ -326,5 +319,40 @@ public class Customer {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static boolean deleteCustomer(String userName, String password) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "delete from customer_details where username=? and password=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			// I want to return the result from s
+//			res = stmt.executeQuery(s);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, password);
+			
+			int rows = pstmt.executeUpdate();
+			System.out.println("before row");
+			if(rows > 0) {
+				System.out.println("after rows");
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

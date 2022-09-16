@@ -18,7 +18,6 @@ public class updateCustomer extends HttpServlet {
 		
 		String cusFirstName = req.getParameter("firstName");
 		String cusLastName = req.getParameter("lastName");
-		String cusPassword = req.getParameter("password");
 		String cusAddress = req.getParameter("address");
 		String cusNumber = req.getParameter("number");
 		String cusEmail = req.getParameter("email");
@@ -26,11 +25,15 @@ public class updateCustomer extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
 	
-		Customer fetchCustomer = Customer.updateCustomerDetails(cusUserName, cusFirstName, cusLastName, cusPassword, cusAddress,cusNumber,cusEmail);
+		Customer fetchCustomer = Customer.updateCustomerDetails(cusUserName, cusFirstName, cusLastName, cusAddress,cusNumber,cusEmail);
 		
 		if(fetchCustomer != null) {
+			session.setAttribute("update", "success");
+			session.setAttribute("login", cusFirstName);
 			session.setAttribute("customerDetails", fetchCustomer);
 			resp.sendRedirect("/capstone/edit.jsp");
+		} else {
+			resp.sendRedirect("/capstone/editFail.jsp");
 		}
 	}
 }

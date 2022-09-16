@@ -56,7 +56,7 @@
 			</div>
 			  <div class="mb-3">
 				<label for="username" class="form-label">Address</label>
-				<input type="text" class="form-control" placeholder="address" name="adderess" required>
+				<input type="text" class="form-control" placeholder="address" name="address" required>
 			  </div>
 			  <div class="mb-3">
 				<label for="username" class="form-label">Phone Number</label>

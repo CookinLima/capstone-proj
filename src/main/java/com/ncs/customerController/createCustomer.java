@@ -1,6 +1,8 @@
 package com.ncs.customerController;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,10 @@ public class createCustomer extends HttpServlet {
 		String cusAddress = req.getParameter("address");
 		String cusNumber = req.getParameter("number");
 		String cusEmail = req.getParameter("email");
+		String cusBalance = req.getParameter("deposit");
 		
 //		int checkAdminExist = Admin.checkAccountExist(adminUserName, adminPassword);
-		int addCustomer = Customer.addCustomer(cusFirstName, cusLastName, cusUserName, cusPassword, cusAddress, cusNumber, cusEmail);
+		int addCustomer = Customer.addCustomer(cusFirstName, cusLastName, cusUserName, cusPassword, cusAddress, cusNumber, cusEmail, cusBalance);
 		
 		 if(addCustomer == 1) {
 			HttpSession session = req.getSession(true);

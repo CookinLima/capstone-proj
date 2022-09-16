@@ -10,23 +10,24 @@ import javax.servlet.http.HttpSession;
 import com.ncs.customerModel.Customer;
 
 /**
- * Servlet implementation class fetchCustomer
+ * Servlet implementation class deleteCustomer
  */
-public class fetchCustomer extends HttpServlet {
+public class deleteCustomer extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
-	
-		Customer fetchCustomer = Customer.fetchCustomerDetails(cusUserName);
-		System.out.println(cusUserName);
-		if(fetchCustomer != null) {
-			session.setAttribute("customerDetails", fetchCustomer);
-			resp.sendRedirect("/capstone/edit.jsp");
+		
+		String cusPassword = req.getParameter("password");
+		
+		boolean checkDeleteUser = Customer.deleteCustomer(cusUserName, cusPassword);
+		
+		if(checkDeleteUser) {
+			resp.sendRedirect("./logout.jsp");
 		} else {
-			System.out.println("wlrjghnw");
-			resp.sendRedirect("/capstone/index.jsp");
+			session.setAttribute("delete", "fail");
+			resp.sendRedirect("./edit.jsp");
 		}
 	}
 }
