@@ -22,7 +22,7 @@
 	  <div class="modal-dialog modal-sm">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Recipient Added!</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Transfer Success!</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		  </div>
 		  <div class="modal-body">
@@ -36,7 +36,7 @@
 	  <div class="modal-dialog modal-sm">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Unable to add Recipient</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Transfer Failed</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		  </div>
 		  <div class="modal-body">
@@ -62,12 +62,13 @@
 				<%@ page import = "java.util.ArrayList" %>
 			
 				<% ArrayList<Customer> recipientList = (ArrayList<Customer>)session.getAttribute("recipientList"); %>
-				<%
-					for(int i=0; i<recipientList.size(); i++) {
-						Customer recipient = recipientList.get(i);
-				%>
-					<option value="<%=recipient.getRecipientUserName()%>"><%=recipient.getRecipientUserName()%></option>
-				<% } %>
+				<%	if(recipientList != null)  { %>
+					<%
+						for(int i=0; i<recipientList.size(); i++) {
+							Customer recipient = recipientList.get(i);
+					%>
+						<option value="<%=recipient.getRecipientUserName()%>"><%=recipient.getRecipientUserName()%></option>
+					<% } }%>
 			</select>
 			<div id="picker2" class="mb-5 d-none">
 				<label for="recipient_name" class="form-label">Recipient's Username</label>
@@ -115,22 +116,24 @@
 		    });
 		 
 		 $(window).bind('beforeunload', function(){
-			  <% recipientList.clear(); %>
-			});
-		 
-		<% if(session.getAttribute("recipient") != null) { %>
+			 <% if(recipientList != null) { %>
+				 <% recipientList.clear(); %>
+			<% } %>
+		});
+		
+		<% if(session.getAttribute("transfer") != null) { %>
 		    $(document).ready(function(){
 		        $("#onLoad").modal('show');
 		    });
 		<% } %>
-		<% request.getSession().setAttribute("recipient", null);%>
+		<% request.getSession().setAttribute("transfer", null);%>
 		
-		<% if(session.getAttribute("recipientFail") != null) { %>
+		<% if(session.getAttribute("transferFail") != null) { %>
 	    	$(document).ready(function(){
 	        $("#onFail").modal('show');
 	    });
 		<% } %>
-		<% request.getSession().setAttribute("recipientFail", null);%>
+		<% request.getSession().setAttribute("transferFail", null);%>
 		
     </script>
   </body>

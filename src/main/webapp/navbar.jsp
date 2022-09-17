@@ -45,7 +45,7 @@
                   <a class="dropdown-item" href="/capstone/addRecipient.jsp">Add new recipient</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/capstone/recipientList.jsp">Show all transactions</a>
+                  <a class="dropdown-item" href="/capstone/transaction">Show all transactions</a>
                 </li>
               </ul>
             </li>

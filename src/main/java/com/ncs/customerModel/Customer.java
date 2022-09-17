@@ -6,7 +6,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +22,8 @@ import javax.persistence.Table;
 @Table(name="customer_details")
 public class Customer {
 	private static ArrayList<Customer> recipients = new ArrayList<Customer>();
+	private static ArrayList<Customer> transactions = new ArrayList<Customer>();
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -35,7 +40,22 @@ public class Customer {
 	private BigDecimal income;
 	private String recipient;
 	private String recipientUserName;
+	private Date datetime;
+	private BigDecimal amount;
 	
+	
+	public Date getDatetime() {
+		return datetime;
+	}
+	public void setDatetime(Date datetime) {
+		this.datetime = datetime;
+	}
+	public BigDecimal getAmount() {
+		return amount;
+	}
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 	public String getRecipient() {
 		return recipient;
 	}
@@ -123,6 +143,14 @@ public class Customer {
 		this.income = income;
 	}
 	
+	public Customer(String userName, String recipientUserName, Date datetime, BigDecimal amount) {
+		super();
+		this.userName = userName;
+		this.recipientUserName = recipientUserName;
+		this.datetime = datetime;
+		this.amount = amount;
+	}
+	
 	public Customer(String recipientUserName, String recipient) {
 		super();
 		this.recipientUserName = recipientUserName;
@@ -143,6 +171,10 @@ public class Customer {
 	
 	public static Customer createRecipient(String recipientUserName, String recipient) {
 		return new Customer(recipientUserName, recipient);
+	}
+	
+	public static Customer createTransaction(String userName, String rUserName, Date datetime, BigDecimal amount) {
+		return new Customer(userName, rUserName, datetime, amount);
 	}
 	
 	public static int addCustomer(String firstName, String lastName, String userName, String password, String address, String number, String email, String cusBalance) {
@@ -393,7 +425,7 @@ public class Customer {
 			System.out.println("Driver loaded successfully");
 			
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
-			System.out.println("Connection establised successfully!!");
+			System.out.println("Connection establised successfully in transfer method");
 			
 			// store sql command into s
 			String sender = "update customer_details set balance=? where username=?";
@@ -425,7 +457,8 @@ public class Customer {
 				pstmt.setString(2, rUserName);
 				int row2 = pstmt.executeUpdate();
 				if(row2 > 0) {
-					return true;
+					boolean addTransaction = Customer.addTransaction(cusUserName, rUserName, transferAmount);
+					return addTransaction;
 				}
 			}
 			
@@ -433,6 +466,42 @@ public class Customer {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public static boolean addTransaction(String cusUserName, String rUserName, String amount) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+//			store sql command into s
+			String s = "insert into transaction(sender, sendee, amount, datetime) values(?,?,?,?)";
+// 			Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+// 			I want to return the result from s
+//			res = stmt.executeQuery(s);
+			pstmt.setString(1, cusUserName);
+			pstmt.setString(2, rUserName);
+			pstmt.setString(3, amount);
+			pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+			int rows = pstmt.executeUpdate();
+			if(rows > 0) {
+				System.out.println("In addTransaction: success");
+				return true;
+			} 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("In addTransaction: failed");
 		return false;
 	}
 	
@@ -545,5 +614,45 @@ public class Customer {
 			e.printStackTrace();
 		}
 		return recipients;
+	}
+	
+	public static ArrayList<Customer> fetchAllTransaction(String username) {
+
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from transaction where sender=? or sendee=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, username);
+			pstmt.setString(2, username);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			while(res.next()) {
+				Timestamp datetime = res.getTimestamp(2);
+				Date date = datetime;
+				String sender = res.getString(3);
+				String sendee = res.getString(4);
+				String balance = res.getString(5);
+				BigDecimal balanceToDecimal = new BigDecimal(balance);
+				
+				Customer fetchTransaction = Customer.createTransaction(sender, sendee, date, balanceToDecimal);
+				transactions.add(fetchTransaction);
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return transactions;
 	}
 }

@@ -13,27 +13,24 @@ import javax.servlet.http.HttpSession;
 import com.ncs.customerModel.Customer;
 
 /**
- * Servlet implementation class loadTransferPage
+ * Servlet implementation class transaction
  */
-public class loadTransferPage extends HttpServlet {
+public class transaction extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
-		
-		System.out.println(cusUserName);
+	
+		ArrayList<Customer> fetchAllTransaction = Customer.fetchAllTransaction(cusUserName);
 
-		ArrayList<Customer> addRecipient = Customer.fetchAllRecipient(cusUserName);
-		BigDecimal cusBalance = Customer.fetchBalance(cusUserName);
-		
-		 if(addRecipient.size() > 0 && cusBalance != null) {
-			session.setAttribute("recipientList", addRecipient);
-			session.setAttribute("cusBalance", cusBalance);
-			resp.sendRedirect("./transfer.jsp");
+		if(fetchAllTransaction != null) {
+			session.setAttribute("transactionList", fetchAllTransaction);
+			session.setAttribute("transaction", "success");
+			resp.sendRedirect("/capstone/transaction.jsp");
 		} else {
-			session.setAttribute("recipientList", null);
-			resp.sendRedirect("./transfer.jsp");
+			session.setAttribute("transactionFail", "fail");
+			resp.sendRedirect("/capstone/transaction.jsp");
 		}
 	}
 }

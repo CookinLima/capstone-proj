@@ -2,6 +2,7 @@ package com.ncs.customerController;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,21 +21,23 @@ public class transfer extends HttpServlet {
 		
 		String transferAmount = req.getParameter("transferAmount");
 		String rUserName = req.getParameter("rUserName");
-		System.out.println("in transfer.java " + rUserName);
+//		System.out.println("in transfer.java " + rUserName);
 //		System.out.println("in transfer.java " + transferAmount);
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
 	
 		boolean fetchCustomer = Customer.transfer(cusUserName, rUserName, transferAmount);
-		
-		System.out.println(fetchCustomer);
-//		if(fetchCustomer != null) {
-//			session.setAttribute("update", "success");
-//			session.setAttribute("login", cusFirstName);
-//			session.setAttribute("customerDetails", fetchCustomer);
-//			resp.sendRedirect("/capstone/edit.jsp");
-//		} else {
-//			resp.sendRedirect("/capstone/editFail.jsp");
-//		}
+//		System.out.println(fetchCustomer);
+		if(fetchCustomer) {
+			BigDecimal cusBalance = Customer.fetchBalance(cusUserName);
+			ArrayList<Customer> addRecipient = Customer.fetchAllRecipient(cusUserName);
+			session.setAttribute("recipientList", addRecipient);
+			session.setAttribute("transfer", "success");
+			session.setAttribute("cusBalance", cusBalance);
+			resp.sendRedirect("/capstone/transfer.jsp");
+		} else {
+			session.setAttribute("transferFail", "fail");
+			resp.sendRedirect("/capstone/transfer.jsp");
+		}
 	}
 }
