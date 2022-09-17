@@ -40,9 +40,12 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Withdrawal</a></li>
+                <li><a class="dropdown-item" href="/capstone/loadTransferPage">Transfer (One-time)</a></li>
                 <li>
-                  <a class="dropdown-item" href="#">Transfer</a>
+                  <a class="dropdown-item" href="/capstone/addRecipient.jsp">Add new recipient</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/capstone/recipientList.jsp">Show all transactions</a>
                 </li>
               </ul>
             </li>

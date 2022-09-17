@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="customer_details")
 public class Customer {
+	private static ArrayList<Customer> recipients = new ArrayList<Customer>();
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -31,7 +33,21 @@ public class Customer {
 	private BigDecimal balance;
 	private String occupation;
 	private BigDecimal income;
+	private String recipient;
+	private String recipientUserName;
 	
+	public String getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+	public String getRecipientUserName() {
+		return recipientUserName;
+	}
+	public void setRecipientUserName(String recipientUserName) {
+		this.recipientUserName = recipientUserName;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -106,6 +122,12 @@ public class Customer {
 		this.occupation = occupation;
 		this.income = income;
 	}
+	
+	public Customer(String recipientUserName, String recipient) {
+		super();
+		this.recipientUserName = recipientUserName;
+		this.recipient = recipient;
+	}
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
@@ -117,6 +139,10 @@ public class Customer {
 			String email, BigDecimal balance, String occupation, BigDecimal income) {
 		return new Customer(firstName, lastName, userName, password, address, number,
 			email, balance, occupation,income);
+	}
+	
+	public static Customer createRecipient(String recipientUserName, String recipient) {
+		return new Customer(recipientUserName, recipient);
 	}
 	
 	public static int addCustomer(String firstName, String lastName, String userName, String password, String address, String number, String email, String cusBalance) {
@@ -282,6 +308,42 @@ public class Customer {
 		return null;
 	}
 	
+	public static BigDecimal fetchBalance(String userName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from customer_details where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, userName);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			System.out.println("before res.next");
+			if(res.next()) {
+				System.out.println("res.next working");
+//				Need to convert string to bigdecimal first
+				String balance = res.getString(9);
+				BigDecimal balanceToDecimal = new BigDecimal(balance);
+				System.out.println("in fetchBalance method: " + balanceToDecimal);
+				return balanceToDecimal;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static Customer updateCustomerDetails(String userName,String firstName, String lastName, String address, String number, String email) {
 		Connection con = null;
 		Statement stmt = null;
@@ -321,6 +383,59 @@ public class Customer {
 		return null;
 	}
 	
+	public static boolean transfer(String cusUserName, String rUserName, String transferAmount) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String sender = "update customer_details set balance=? where username=?";
+			String recipient = "update customer_details set balance=? where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(sender);
+			
+//			fetch balance from both accounts
+			System.out.println("cusUserName " + cusUserName);
+			BigDecimal senderBalance = Customer.fetchBalance(cusUserName);
+			System.out.println("rUserName " + rUserName);
+			BigDecimal recipientBalance = Customer.fetchBalance(rUserName);
+			
+//			change datatype to bigdecimal
+			BigDecimal transferAmountToDecimal = new BigDecimal(transferAmount);
+			
+//			calculate new balance on both accounts
+			BigDecimal newSenderBalance = senderBalance.subtract(transferAmountToDecimal);
+			BigDecimal newRecipientBalance = recipientBalance.add(transferAmountToDecimal);
+			
+			pstmt.setString(1, newSenderBalance.toString());
+			pstmt.setString(2, cusUserName);
+			
+			int row1 = pstmt.executeUpdate();
+			if(row1 > 0) {
+				System.out.println("balance update success");
+				pstmt = con.prepareStatement(recipient);
+				pstmt.setString(1, newRecipientBalance.toString());
+				pstmt.setString(2, rUserName);
+				int row2 = pstmt.executeUpdate();
+				if(row2 > 0) {
+					return true;
+				}
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public static boolean deleteCustomer(String userName, String password) {
 		Connection con = null;
 		Statement stmt = null;
@@ -354,5 +469,81 @@ public class Customer {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public static boolean addRecipient(String name, String rUserName, String userName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "insert into recipient(sender_username, recipient_username, name) values (?,?,?)";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			// I want to return the result from s
+//			res = stmt.executeQuery(s);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, rUserName);
+			pstmt.setString(3, name);
+			
+			boolean checkUserName = Customer.checkUserNameExist(userName);
+//			System.out.println("username exist:" + checkUserName);
+			boolean checkRUserName = Customer.checkUserNameExist(rUserName);
+//			System.out.println("rUsername exist:" + checkRUserName);
+			
+			if(!checkUserName && !checkRUserName) {
+				int rows = pstmt.executeUpdate();
+				if(rows > 0) {
+					return true;
+				}
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static ArrayList<Customer> fetchAllRecipient(String username) {
+
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from recipient where sender_username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, username);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			while(res.next()) {
+				String rUserName = res.getString(2);
+				String name = res.getString(3);
+				
+				Customer fetchCustomer = Customer.createRecipient(rUserName, name);
+				recipients.add(fetchCustomer);
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return recipients;
 	}
 }

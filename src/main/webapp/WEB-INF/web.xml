@@ -43,6 +43,34 @@
 		<servlet-name>deleteCustomer</servlet-name>
 		<servlet-class>com.ncs.customerController.deleteCustomer</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>withdrawal</display-name>
+		<servlet-name>withdrawal</servlet-name>
+		<servlet-class>com.ncs.customerController.withdrawal</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>addRecipient</display-name>
+		<servlet-name>addRecipient</servlet-name>
+		<servlet-class>com.ncs.customerController.addRecipient</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>transfer</display-name>
+		<servlet-name>transfer</servlet-name>
+		<servlet-class>com.ncs.customerController.transfer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>loadTransferPage</display-name>
+		<servlet-name>loadTransferPage</servlet-name>
+		<servlet-class>com.ncs.customerController.loadTransferPage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
@@ -66,6 +94,22 @@
 	<servlet-mapping>
 		<servlet-name>deleteCustomer</servlet-name>
 		<url-pattern>/deleteCustomer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>withdrawal</servlet-name>
+		<url-pattern>/withdrawal</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>addRecipient</servlet-name>
+		<url-pattern>/addRecipient</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>transfer</servlet-name>
+		<url-pattern>/transfer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>loadTransferPage</servlet-name>
+		<url-pattern>/loadTransferPage</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
