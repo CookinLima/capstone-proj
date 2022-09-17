@@ -64,7 +64,7 @@
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="#">Auto Loan</a></li>
+                <li><a class="dropdown-item" href="/capstone/loan.jsp">Auto Loan</a></li>
                 <li><a class="dropdown-item" href="#">Housing Loan</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Student Loan</a>
