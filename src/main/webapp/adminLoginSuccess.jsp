@@ -18,59 +18,99 @@
     <jsp:param name="login" value=""/>
 	</jsp:include>
 	
-				  	<%@ page import = "com.ncs.customerModel.Loan" %>
-					<%@ page import = "java.util.ArrayList" %>
-								
-						<% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %>
-							<%	if(loanList != null)  { %>
-								<%
-									for(int i=0; i<loanList.size(); i++) {
-										Loan loan = loanList.get(i);
-								%>
-								<p><%=loan.getLoanName()%></p>
-						<% } }%>
-
-	
-	
+	<%@ page import = "com.ncs.customerModel.Loan" %>
+	<%@ page import = "java.util.ArrayList" %>
+	<%ArrayList<Integer> countLoans = (ArrayList<Integer>)session.getAttribute("countLoans");%>							
 	<div class="container w-50 mx-auto mt-5">
 		<ol class="list-group list-group-numbered">
-		  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-		    <div class="ms-2 me-auto">
-		      <div class="fw-bold">Pending Loan</div>
-		      Cras justo odio
-		    </div>
-		    <span class="badge bg-danger rounded-pill">14</span>
-		  </li>
-		  <div class="card collapse" id="collapseExample">
-			  <div class="card-body">
-			    This is some text within a card body.
-			  </div>
-		 </div>
-		 		  <div class="card collapse" id="collapseExample">
-			  <div class="card-body">
-			    This is some text within a card body.
-			  </div>
-		 </div>
-		 		  <div class="card collapse" id="collapseExample">
-			  <div class="card-body">
-			    This is some text within a card body.
-			  </div>
-		 </div>
-		  <!-- <p class="collapse" id="collapseExample">working</p> -->
-		  <li class="list-group-item d-flex justify-content-between align-items-start">
-		    <div class="ms-2 me-auto">
-		      <div class="fw-bold">Approved Loan</div>
-		      Cras justo odio
-		    </div>
-		    <span class="badge bg-primary rounded-pill">14</span>
-		  </li>
-		  <li class="list-group-item d-flex justify-content-between align-items-start">
-		    <div class="ms-2 me-auto">
-		      <div class="fw-bold">Rejected Loan</div>
-		      Cras justo odio
-		    </div>
-		    <span class="badge bg-primary rounded-pill">14</span>
-		  </li>
+			<li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapseExample">
+				<div class="ms-2 me-auto">
+					<div class="fw-bold">Pending Loan</div>
+					      Cras justo odio
+					 </div>
+				<span class="badge bg-danger rounded-pill"><%=countLoans.get(2)%></span>
+			 </li>
+			  <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %>
+			  <%	if(loanList != null)  { %>
+					<%
+						for(int i=0; i<loanList.size(); i++) {
+							Loan loan = loanList.get(i);
+							if(loan.getApprove() == 0) {
+					%>
+					<form action="/capstone/fetchLoanCustomerDetails">
+						<div class="card collapse" id="collapse5">
+							<div class="row">
+								<div class="col ms-4">
+									<p class="mt-2">
+										loan type: <%=loan.getLoanName() %>
+									</p>
+									<span>loan id:</span><p id="loanId"><%=loan.getId()%></p>
+									<input type="hidden" id="loanId_hidden" name="loanId" />
+									<span>username:</span><p id="userName"><%=loan.getUserName()%></p>
+									<input type="hidden" id="userName_hidden" name="userName" />
+								</div>
+								<div class="col">
+									<button id="checkLoan" type="submit" class="btn btn-primary mt-4">Check Loan</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					<% } } }%>
+					  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+					    <div class="ms-2 me-auto">
+					      <div class="fw-bold">Approved Loan</div>
+					      Cras justo odio
+					    </div>
+					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(0)%></span>
+					  </li>
+					<%-- <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %> --%>
+					  <%	if(loanList != null)  { %>
+							<%
+								for(int i=0; i<loanList.size(); i++) {
+									Loan loan = loanList.get(i);
+									if(loan.getApprove() == 1) {
+							%>
+							<div class="card collapse" id="collapse1">
+							<div class="row">
+								<div class="col ms-4">
+									<p class="mt-2">
+										loan type: <%=loan.getLoanName() %>
+									</p>
+									<span>loan id:</span><p><%=loan.getId()%></p>									
+									<span>username:</span><p id="userName"><%=loan.getUserName()%></p>
+								</div>
+							</div>
+						</div>
+				<% }  } }%>
+					  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+					    <div class="ms-2 me-auto">
+					      <div class="fw-bold">Rejected Loan</div>
+					      Cras justo odio
+					    </div>
+					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(1)%></span>
+					  </li>		
+					<%-- <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %> --%>
+					  <%	if(loanList != null)  { %>
+							<%
+								for(int i=0; i<loanList.size(); i++) {
+									Loan loan = loanList.get(i);
+									if(loan.getApprove() == 2) {
+							%>	  		
+						<div class="card collapse" id="collapse2">
+							<div class="row">
+								<div class="col ms-4">
+									<p class="mt-2">
+										loan type: <%=loan.getLoanName() %>
+									</p>
+									<span>loan id:</span><p><%=loan.getId()%></p>
+									<span>username:</span><p><%=loan.getUserName()%></p>
+									
+								</div>
+							</div>
+						</div>
+			<%} } } %>
+
+
 		</ol>
 	</div>
     <script
@@ -78,5 +118,14 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script>
+		 $('#checkLoan').click(function() {
+			$("#loanId_hidden").val($("#loanId").text());
+			 console.log($("#loanId_hidden").val());
+			$("#userName_hidden").val($("#userName").text());
+			console.log($("#userName_hidden").val()); 
+		 });
+  </script>
   </body>
 </html>

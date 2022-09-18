@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class Loan {
 	private static ArrayList<Loan> loans = new ArrayList<Loan>();
+	private static ArrayList<Integer> count = new ArrayList<Integer>();
+	private int id;
 	private String loanName;
 	private String userName;
 	private BigDecimal principal;
@@ -21,6 +23,12 @@ public class Loan {
 	private int duration;
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public BigDecimal getTotalIR() {
 		return totalIR;
 	}
@@ -82,9 +90,10 @@ public class Loan {
 		this.duration = duration;
 	}
 	
-	public Loan(String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
+	public Loan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
 			int approve, String occupation, BigDecimal income, int duration) {
 		super();
+		this.id = id;
 		this.loanName = loanName;
 		this.userName = userName;
 		this.principal = principal;
@@ -95,9 +104,9 @@ public class Loan {
 		this.income = income;
 		this.duration = duration;
 	}
-	public static Loan createLoan(String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
+	public static Loan createLoan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
 			int approve, String occupation, BigDecimal income, int duration) {
-		return new Loan(loanName, userName, principal, totalIR, annualIR, approve, occupation, income, duration);
+		return new Loan(id,loanName, userName, principal, totalIR, annualIR, approve, occupation, income, duration);
 	}
 	
 	public static int getLoan(String cusUserName, String loanName, String principal, String duration, String annualInterest, String totalInterest, String occupation, String income) {
@@ -167,8 +176,10 @@ public class Loan {
 			// I want to return the result from s
 			res = pstmt.executeQuery();
 			System.out.println("fetchAllLoans before res.next");
+			
 			while(res.next()) {
 				System.out.println("fetchAllLoans res.next working");
+				int id = res.getInt(1);
 				String loanName = res.getString(2);
 				String username = res.getString(3);
 				String principalSum = res.getString(4);
@@ -183,7 +194,7 @@ public class Loan {
 				String income = res.getString(11);
 				BigDecimal incomeToDecimal = new BigDecimal(income);
 				
-				Loan fetchLoans = Loan.createLoan(loanName, username, principalSumToDecimal, totalIRToDecimal, 
+				Loan fetchLoans = Loan.createLoan(id,loanName, username, principalSumToDecimal, totalIRToDecimal, 
 						annualIRToDecimal, approve, occupation, incomeToDecimal, duration);
 				loans.add(fetchLoans);
 			}
@@ -193,5 +204,143 @@ public class Loan {
 			e.printStackTrace();
 		}
 		return loans;
+	}
+	
+	public static Loan fetchLoan(int id) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from loan where id=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setInt(1, id);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			System.out.println("fetchLoan before res.next");
+			if(res.next()) {
+				int tempId = res.getInt(1);
+				String loanName = res.getString(2);
+				String username = res.getString(3);
+				String principalSum = res.getString(4);
+				BigDecimal principalSumToDecimal = new BigDecimal(principalSum);
+				String totalIR = res.getString(5);
+				BigDecimal totalIRToDecimal = new BigDecimal(totalIR);
+				int duration = res.getInt(6);
+				String annualIR = res.getString(8);
+				BigDecimal annualIRToDecimal = new BigDecimal(annualIR);
+				int approve = res.getInt(9);
+				String occupation = res.getString(10);
+				String income = res.getString(11);
+				BigDecimal incomeToDecimal = new BigDecimal(income);
+				
+				Loan fetchLoan = Loan.createLoan(tempId,loanName, username, principalSumToDecimal, totalIRToDecimal, 
+						annualIRToDecimal, approve, occupation, incomeToDecimal, duration);
+				return fetchLoan;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static boolean approveLoan(String loanId) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "update loan set approve=? where id=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setInt(1, 1);
+			int loanIdToInt = Integer.parseInt(loanId);
+			pstmt.setInt(2, loanIdToInt);
+			
+			int row = pstmt.executeUpdate();
+			if(row > 0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static boolean rejectLoan(String loanId) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "update loan set approve=? where id=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setInt(1, 2);
+			int loanIdToInt = Integer.parseInt(loanId);
+			pstmt.setInt(2, loanIdToInt);
+			
+			int row = pstmt.executeUpdate();
+			if(row > 0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static ArrayList<Integer> countLoans() {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select approve, count(*) from loan group by approve";
+			pstmt = con.prepareStatement(s);
+			res = pstmt.executeQuery();
+			
+			
+			while(res.next()) {
+				int num1 = res.getInt(2);
+				count.add(num1);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }

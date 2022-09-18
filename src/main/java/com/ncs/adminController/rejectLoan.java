@@ -9,28 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ncs.adminModel.Admin;
 import com.ncs.customerModel.Loan;
 
 /**
- * Servlet implementation class validateAdminLogin
+ * Servlet implementation class rejectLoan
  */
-public class validateAdminLogin extends HttpServlet {
+public class rejectLoan extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String adminUserName = req.getParameter("username");
-		String adminPassword = req.getParameter("password");
+		String loanId = req.getParameter("loanId");
 		
-		int checkAdminExist = Admin.checkAccountExist(adminUserName, adminPassword);
+		boolean rejectLoan = Loan.rejectLoan(loanId);
+		int[] countLoans = Loan.countLoans();
 		
-		if(checkAdminExist == 1) {
+		if(rejectLoan) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();
-			ArrayList<Integer> countLoans = Loan.countLoans();
-//			System.out.println(countLoans.get(2));
-//			System.out.println(fetchAllLoans.get(1).getLoanName());
 			 if(fetchAllLoans != null) {
 					HttpSession session = req.getSession(true);
-					session.setAttribute("login", adminUserName);
 					session.setAttribute("fetchLoans", fetchAllLoans);
 					session.setAttribute("countLoans", countLoans);
 					resp.sendRedirect("./adminLoginSuccess.jsp");

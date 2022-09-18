@@ -92,6 +92,27 @@
 		<servlet-name>submitLoan</servlet-name>
 		<servlet-class>com.ncs.customerController.submitLoan</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>fetchLoanCustomerDetails</display-name>
+		<servlet-name>fetchLoanCustomerDetails</servlet-name>
+		<servlet-class>com.ncs.adminController.fetchLoanCustomerDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>approveLoan</display-name>
+		<servlet-name>approveLoan</servlet-name>
+		<servlet-class>com.ncs.adminController.approveLoan</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>rejectLoan</display-name>
+		<servlet-name>rejectLoan</servlet-name>
+		<servlet-class>com.ncs.adminController.rejectLoan</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
@@ -143,6 +164,18 @@
 	<servlet-mapping>
 		<servlet-name>submitLoan</servlet-name>
 		<url-pattern>/submitLoan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>fetchLoanCustomerDetails</servlet-name>
+		<url-pattern>/fetchLoanCustomerDetails</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>approveLoan</servlet-name>
+		<url-pattern>/approveLoan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>rejectLoan</servlet-name>
+		<url-pattern>/rejectLoan</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
