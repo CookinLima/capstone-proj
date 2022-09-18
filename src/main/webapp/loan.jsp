@@ -17,10 +17,49 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 mt-5 mx-auto">
+	
+	<div class="modal fade" id="onLoad" tabindex="-1">
+	  <div class="modal-dialog modal-sm">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Loan application Success!</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		  </div>
+		  <div class="modal-body">
+				Please wait 1-2 weeks for our agents examine your application.
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="onFail" tabindex="-1">
+	  <div class="modal-dialog modal-sm">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Loan application Failed</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		  </div>
+		  <div class="modal-body">
+				Username is invalid, please try again.
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div id="login-container" class="container w-50 mt-2 mx-auto">
 	<!-- style="background-color: #EDF5E1 !important; -->
-		<form action="/capstone/getLoan">
-			<select id="selectVal" class="form-select mb-3" aria-label="Default select example" required>
+		<form action="/capstone/submitLoan">
+			<div class="row mb-3">
+  				<div class="col">
+					<label for="occupation" class="form-label">What is your occupation</label>
+					<input type="text" class="form-control" placeholder="occupation" name="occupation" required>
+  				</div>
+  				<div class="col">
+  					<label for="income" class="form-label">what is your current income</label>
+    				<input type="text" class="form-control" placeholder="current income" aria-label="Last name" name="income" aria-label="Amount (to the nearest dollar)">
+  				</div>
+			</div>
+			<select id="selectVal" class="form-select mb-3" name="loanName" aria-label="Default select example" required>
 			  <option value="">Choose a loan option</option>
 			  <option value="auto">Auto Loan</option>
 			  <option value="housing">Housing Loan</option>
@@ -42,14 +81,14 @@
 			  </div>
 			  <div class="mb-3">
 				  <label for="" class="form-label">Your expected annual interest-rate(IR)</label>
-				  <input id="annualIR" class="form-control" type="text" value="" name="annualInterest" aria-label="Disabled input example" disabled readonly>
+				  <input id="annualIR" class="form-control" type="text" name="annualInterest" aria-label="Disabled input example" disabled readonly>
 			  </div>
 			  <div class="mb-3">
 				  <label for="" class="form-label">Your expected total interest-rate(IR)</label>
-				  <input id="totalIR" class="form-control" type="text" value="" name="totalInterest" aria-label="Disabled input example" disabled readonly>
+				  <input id="totalIR" class="form-control" type="text" name="totalInterest" aria-label="Disabled input example" disabled readonly>
 			  </div>
 
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <button id="submitBtn" type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
     <script
@@ -60,6 +99,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
 	<script>
+		$('#submitBtn').click(function() {
+			$("#annualIR").prop('disabled', false);
+			$("#totalIR").prop('disabled', false);
+		})
+	
 		 $('#onCalculate').click(function () {
 		        var selectedRange = $('#rangeval').val();
 				var selectedLoan = $('#selectVal').val();
@@ -87,6 +131,8 @@
  					var newHousingIR = housingIR + ((selectedRange - 1) / 100);
 					var totalInterest = selectedPVal * newHousingIR;
 					var annualInterest = totalInterest / selectedRange;
+					$('#annualIR').val(annualInterest.toFixed(2));
+					$('#totalIR').val(totalInterest.toFixed(2));
 					console.log(annualInterest);
 				}
  				
@@ -94,9 +140,30 @@
  					var newStudentIR = studentIR + ((selectedRange - 1) / 100);
 					var totalInterest = selectedPVal * newHousingIR;
 					var annualInterest = totalInterest / selectedRange;
+					$('#annualIR').val(annualInterest.toFixed(2));
+					$('#totalIR').val(totalInterest.toFixed(2));
 					console.log(annualInterest);
 				} 
 		    });
+		 
+		 	
+    </script>
+    <script>
+
+		<% if(session.getAttribute("loan") != null){ %>
+		    $(document).ready(function(){
+		        $("#onLoad").modal('show');
+		    });
+		<% } %>
+		<% request.getSession().setAttribute("loan", null);%>
+		
+		<% if(session.getAttribute("loanFail") != null) { %>
+	    	$(document).ready(function(){
+	        $("#onFail").modal('show');
+	    });
+		<% } %>
+		<% request.getSession().setAttribute("loanFail", null);%>
+		
     </script>
   </body>
 </html>

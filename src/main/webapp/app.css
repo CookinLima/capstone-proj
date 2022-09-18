@@ -23,6 +23,12 @@ li {
   color: black;
 }
 
+.list-group-item {
+	color: #212529 !important;
+  	background-color: #fed1aa !important; 
+}
+
+
 /* .nav-link {
   color: #05386b !important;
 } */

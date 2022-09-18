@@ -85,6 +85,13 @@
 		<servlet-name>Loan</servlet-name>
 		<servlet-class>com.ncs.customerController.Loan</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>submitLoan</display-name>
+		<servlet-name>submitLoan</servlet-name>
+		<servlet-class>com.ncs.customerController.submitLoan</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
@@ -132,6 +139,10 @@
 	<servlet-mapping>
 		<servlet-name>Loan</servlet-name>
 		<url-pattern>/Loan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>submitLoan</servlet-name>
+		<url-pattern>/submitLoan</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

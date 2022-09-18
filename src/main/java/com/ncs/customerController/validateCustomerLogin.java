@@ -30,7 +30,7 @@ public class validateCustomerLogin extends HttpServlet {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", checkCusExist);
 			session.setAttribute("cusUserName", cusUserName);
-			resp.sendRedirect("./adminLoginSuccess.jsp");
+			resp.sendRedirect("./customerLoginSuccess.jsp");
 		}
 	}
 }
