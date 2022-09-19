@@ -33,7 +33,8 @@ public class createCustomer extends HttpServlet {
 		 if(addCustomer == 1) {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", cusFirstName);
-			resp.sendRedirect("./customerLoginSuccess.jsp");
+			session.setAttribute("cusUserName", cusUserName);
+			resp.sendRedirect("./index.jsp");
 		} else if(addCustomer == 0) {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", null);

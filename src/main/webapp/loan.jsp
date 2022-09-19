@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-color: #f5d7d7">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -46,7 +46,7 @@
 	  </div>
 	</div>
 	
-	<div id="login-container" class="container w-50 mt-2 mx-auto">
+	<div id="login-container" class="container w-50 mt-3 mx-auto">
 	<!-- style="background-color: #EDF5E1 !important; -->
 		<form action="/capstone/submitLoan">
 			<div class="row mb-3">

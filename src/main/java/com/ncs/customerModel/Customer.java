@@ -654,4 +654,38 @@ public class Customer {
 		}
 		return transactions;
 	}
+	
+	public static boolean updateLoanProfile(String cusUserName, String occupation, String income) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "update customer_details set occupation=?, income=? where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			// I want to return the result from s
+//			res = stmt.executeQuery(s);
+			pstmt.setString(1, occupation);
+			pstmt.setString(2, income);
+			pstmt.setString(3, cusUserName);
+			
+			int rows = pstmt.executeUpdate();
+			if(rows > 0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

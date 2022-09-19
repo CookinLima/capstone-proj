@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-image:url(./images/singapore.jpeg);">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -47,14 +47,14 @@
 	</div>
 	
 	<div id="login-container" class="container w-50 mt-5 mx-auto">
-		<h3>I would like to add</h3>
+		<h3 style="color:white;">I would like to add</h3>
 		<hr>
 		<form action="/capstone/addRecipient">
-  			<div class="mb-3">
+  			<div class="mb-3" style="color:white;">
 				<label for="recipient_name" class="form-label">Recipient's name</label>
 				<input type="text" class="form-control" placeholder="recipient's name" name="recipient_name" required>
 			  </div>
-			  <div class="mb-3">
+			  <div class="mb-3" style="color:white;">
 			    <label for="recipient_username" class="form-label">Recipient's username</label>
 			    <input type="text" class="form-control" id="recipient_username" name="recipient_username" placeholder="recipient's username" required>
 			  </div>

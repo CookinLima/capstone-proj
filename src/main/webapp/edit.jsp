@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="app.css" />
 
   </head>
-  <body>
+  <body style="background-image:url(./images/banking1.jpeg);">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -51,7 +51,7 @@
 	
 	<% Customer customer = (Customer)session.getAttribute("customerDetails"); %>
 	<div class="container mx-auto w-50">
-		<h3 class="mt-3">My Profile</h3>
+		<h3 class="mt-4">My Profile</h3>
 		<h5>Manage and protect your account</h5>
 		<hr>
 		<form action="/capstone/updateCustomer">

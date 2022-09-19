@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ncs.customerModel.Customer;
 import com.ncs.customerModel.Loan;
 
 /**
@@ -32,8 +33,11 @@ public class submitLoan extends HttpServlet {
 		int getLoan = Loan.getLoan(cusUserName, loanName, principal, duration, annualInterest, totalInterest, occupation, income);
 		System.out.println(getLoan);
 		if( getLoan == 1 ) {
-			session.setAttribute("loan", "success");
-			resp.sendRedirect("/capstone/loan.jsp");
+			boolean updateUserProfile = Customer.updateLoanProfile(cusUserName, occupation, income);
+			if(updateUserProfile) {
+				session.setAttribute("loan", "success");
+				resp.sendRedirect("/capstone/loan.jsp");
+			}
 		} else {
 			session.setAttribute("loanFail", "fail");
 			resp.sendRedirect("/capstone/loan.jsp");

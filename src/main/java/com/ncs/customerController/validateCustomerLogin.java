@@ -25,12 +25,12 @@ public class validateCustomerLogin extends HttpServlet {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", null);
 			session.setAttribute("fail", "wp");
-			resp.sendRedirect("./customerLoginFail.jsp");
+			resp.sendRedirect("./customerLogin.jsp");
 		} else {
 			HttpSession session = req.getSession(true);
 			session.setAttribute("login", checkCusExist);
 			session.setAttribute("cusUserName", cusUserName);
-			resp.sendRedirect("./customerLoginSuccess.jsp");
+			resp.sendRedirect("./index.jsp");
 		}
 	}
 }

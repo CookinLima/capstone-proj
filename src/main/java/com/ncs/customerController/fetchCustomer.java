@@ -25,7 +25,7 @@ public class fetchCustomer extends HttpServlet {
 			session.setAttribute("customerDetails", fetchCustomer);
 			resp.sendRedirect("/capstone/edit.jsp");
 		} else {
-			System.out.println("wlrjghnw");
+			System.out.println("cannot find username");
 			resp.sendRedirect("/capstone/index.jsp");
 		}
 	}

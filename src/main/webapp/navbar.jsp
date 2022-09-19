@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item px-4">
-              <a class="nav-link" aria-current="page" href="#">Home</a>
+              <a class="nav-link" aria-current="page" href="/capstone/index.jsp">Home</a>
             </li>
             <li class="nav-item dropdown px-4">
               <a
@@ -49,27 +49,18 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item dropdown px-4">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Loan
-              </a>
-              <ul
+            <li class="nav-item px-4">
+              <a class="nav-link" href="/capstone/loan.jsp">Loan</a>
+<!--               <ul
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <li><a class="dropdown-item" href="/capstone/loan.jsp">Auto Loan</a></li>
+                <li><a class="dropdown-item" href="/capstone/loan.jsp">Loan</a></li>
                 <li><a class="dropdown-item" href="#">Housing Loan</a></li>
                 <li>
                   <a class="dropdown-item" href="#">Student Loan</a>
                 </li>
-              </ul>
+              </ul> -->
             </li>
           </ul>
           <% if(session.getAttribute("login") == null) { %>

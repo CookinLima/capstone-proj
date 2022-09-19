@@ -17,13 +17,13 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 mt-5 mx-auto">
+	<div id="login-container" class="container mt-5 mx-auto">
 		<div class="alert alert-danger mt-1" role="alert">
 		  <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->  
 		<% if(session.getAttribute("fail") == "userExist")  { %>
 			Username already exist. Please choose another username.
 		<% }  else  { %>
-			Server side error, please try again later.
+			Username already exist. Please choose another username.
 		<% } %>
 		</div>
 		<div id="login-container" class="container w-50 mt-5 mx-auto">

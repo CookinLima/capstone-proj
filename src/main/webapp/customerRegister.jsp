@@ -13,14 +13,14 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-image:url(./images/banking1.jpeg);">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 mt-3 mx-auto">
+	<div id="login-container" class="container w-50 h-90 mt-2 mx-auto"">
 	<!-- style="background-color: #EDF5E1 !important; -->
 		<form action="/capstone/createCustomer" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")' >
-			<div class="row mb-3">
+			<div class="row mb-2">
   				<div class="col">
   					<label for="firstName" class="form-label">First Name</label>
     				<input type="text" class="form-control" placeholder="First name" aria-label="First name" name="firstName">
@@ -30,7 +30,7 @@
     				<input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="lastName">
   				</div>
 			</div>
-			<div class="row mb-3">
+			<div class="row mb-2">
   				<div class="col">
 					<label for="username" class="form-label">Username</label>
 					<input type="text" class="form-control" placeholder="Username" name="userName" required>
@@ -44,7 +44,7 @@
 				<label for="username" class="form-label">Username</label>
 				<input type="text" class="form-control" placeholder="Username" name="userName" required>
 			  </div> -->
-			  <div class="row mb-3">
+			  <div class="row mb-2">
   				<div class="col">
 				    <label for="exampleInputPassword1" class="form-label">Password</label>
 				    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
@@ -54,11 +54,11 @@
 				    <input type="password" class="form-control" id="exampleInputPassword2" name="password2" placeholder="Retype password" required>
   				</div>
 			</div>
-			  <div class="mb-3">
+			  <div class="mb-2">
 				<label for="username" class="form-label">Address</label>
 				<input type="text" class="form-control" placeholder="address" name="address" required>
 			  </div>
-			  <div class="mb-3">
+			  <div class="mb-2">
 				<label for="username" class="form-label">Phone Number</label>
 				<input type="text" class="form-control" placeholder="Phone number" name="number" required>
 			  </div>
