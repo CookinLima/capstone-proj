@@ -9,8 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Loan {
-	private static ArrayList<Loan> loans = new ArrayList<Loan>();
-	private static ArrayList<Integer> count = new ArrayList<Integer>();
 	private int id;
 	private String loanName;
 	private String userName;
@@ -162,6 +160,7 @@ public class Loan {
 		Statement stmt = null;
 		ResultSet res = null;
 		PreparedStatement pstmt = null;
+		ArrayList<Loan> loans = new ArrayList<Loan>();
 		try {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			System.out.println("Driver loaded successfully");
@@ -320,6 +319,7 @@ public class Loan {
 		Statement stmt = null;
 		ResultSet res = null;
 		PreparedStatement pstmt = null;
+		ArrayList<Integer> count = new ArrayList<Integer>();
 		try {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			System.out.println("Driver loaded successfully");
@@ -331,7 +331,6 @@ public class Loan {
 			String s = "select approve, count(*) from loan group by approve";
 			pstmt = con.prepareStatement(s);
 			res = pstmt.executeQuery();
-			
 			
 			while(res.next()) {
 				int num1 = res.getInt(2);

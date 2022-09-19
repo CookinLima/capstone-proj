@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <nav class="navbar navbar-expand-lg navbar-light py-0 ps-5" style="background-color:white;">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light py-0 ps-5" style="background-color:white;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img

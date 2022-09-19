@@ -102,7 +102,7 @@
 		        var selectedItem = $('.selectpicker').val();
 		        if(selectedItem == 1) {
 		        	$("#picker2").addClass("d-none");
-		        	$("#picker-1").prop("disabled", false);
+		        	$("#picker1").prop("disabled", false);
 		        	$("#picker1").removeClass("d-none");
 		        } else if(selectedItem == 2) {
 		        	$("#picker1").prop("disabled", true);

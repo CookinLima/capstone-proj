@@ -21,10 +21,16 @@ public class approveLoan extends HttpServlet {
 		String loanId = req.getParameter("loanId");
 		
 		boolean approveLoan = Loan.approveLoan(loanId);
-		int[] countLoans = Loan.countLoans();
 		
 		if(approveLoan) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();
+			ArrayList<Integer> countLoans = Loan.countLoans();
+			if(countLoans.size() <= 2) {
+				countLoans.add(0);
+			}
+//			System.out.println("approveloan " +countLoans.get(0));
+//			System.out.println("approveloan " +countLoans.get(1));
+//			System.out.println("approveloan " +countLoans.get(2));
 			 if(fetchAllLoans != null) {
 					HttpSession session = req.getSession(true);
 					session.setAttribute("fetchLoans", fetchAllLoans);

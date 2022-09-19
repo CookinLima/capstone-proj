@@ -26,6 +26,11 @@ public class validateAdminLogin extends HttpServlet {
 		if(checkAdminExist == 1) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();
 			ArrayList<Integer> countLoans = Loan.countLoans();
+			if(countLoans.size() <= 2) {
+				countLoans.add(0);
+			}
+//			System.out.println("validate " +countLoans.get(0));
+//			System.out.println(countLoans.get(1));
 //			System.out.println(countLoans.get(2));
 //			System.out.println(fetchAllLoans.get(1).getLoanName());
 			 if(fetchAllLoans != null) {

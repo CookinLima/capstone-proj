@@ -23,8 +23,8 @@ public class fetchLoanCustomerDetails extends HttpServlet {
 		String loanId = req.getParameter("loanId");
 		String userName = req.getParameter("userName");
 
-//		System.out.println("in fetchloancustoemr.java " + loanId);
-//		System.out.println("in transfer.java " + userName);
+		System.out.println("in fetchloancustoemr.java " + loanId);
+		System.out.println("in transfer.java " + userName);
 
 		Customer fetchCustomer = Customer.fetchCustomerDetails(userName);
 		

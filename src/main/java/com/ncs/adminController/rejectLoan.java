@@ -20,10 +20,14 @@ public class rejectLoan extends HttpServlet {
 		String loanId = req.getParameter("loanId");
 		
 		boolean rejectLoan = Loan.rejectLoan(loanId);
-		int[] countLoans = Loan.countLoans();
+		
 		
 		if(rejectLoan) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();
+			ArrayList<Integer> countLoans = Loan.countLoans();
+			if(countLoans.size() <= 2) {
+				countLoans.add(0);
+			}
 			 if(fetchAllLoans != null) {
 					HttpSession session = req.getSession(true);
 					session.setAttribute("fetchLoans", fetchAllLoans);

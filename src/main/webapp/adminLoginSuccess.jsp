@@ -20,13 +20,14 @@
 	
 	<%@ page import = "com.ncs.customerModel.Loan" %>
 	<%@ page import = "java.util.ArrayList" %>
-	<%ArrayList<Integer> countLoans = (ArrayList<Integer>)session.getAttribute("countLoans");%>							
+	<%ArrayList<Integer> countLoans = (ArrayList<Integer>)session.getAttribute("countLoans");%>
+							
 	<div class="container w-50 mx-auto mt-5">
 		<ol class="list-group list-group-numbered">
 			<li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapseExample">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">Pending Loan</div>
-					      Cras justo odio
+					      Click to view all pending loans
 					 </div>
 				<span class="badge bg-danger rounded-pill"><%=countLoans.get(2)%></span>
 			 </li>
@@ -44,13 +45,13 @@
 									<p class="mt-2">
 										loan type: <%=loan.getLoanName() %>
 									</p>
-									<span>loan id:</span><p id="loanId"><%=loan.getId()%></p>
-									<input type="hidden" id="loanId_hidden" name="loanId" />
-									<span>username:</span><p id="userName"><%=loan.getUserName()%></p>
-									<input type="hidden" id="userName_hidden" name="userName" />
+									<span>loan id:</span><p id=<%="id"+i%>><%=loan.getId()%></p>
+									<input type="hidden" id=<%="id_hidden"+i%> name="loanId" />
+									<span>username:</span><p id=<%="un"+i %>><%=loan.getUserName()%></p>
+									<input type="hidden" id=<%="unh"+i%> name="userName" />
 								</div>
 								<div class="col">
-									<button id="checkLoan" type="submit" class="btn btn-primary mt-4">Check Loan</button>
+									<button id=<%=i%> type="submit" class="checkLoan btn btn-primary mt-4">Check Loan</button>
 								</div>
 							</div>
 						</div>
@@ -59,7 +60,7 @@
 					  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
 					    <div class="ms-2 me-auto">
 					      <div class="fw-bold">Approved Loan</div>
-					      Cras justo odio
+					      Click to view all approved loans
 					    </div>
 					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(0)%></span>
 					  </li>
@@ -85,7 +86,7 @@
 					  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
 					    <div class="ms-2 me-auto">
 					      <div class="fw-bold">Rejected Loan</div>
-					      Cras justo odio
+					      Click to view all rejected loans
 					    </div>
 					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(1)%></span>
 					  </li>		
@@ -109,8 +110,6 @@
 							</div>
 						</div>
 			<%} } } %>
-
-
 		</ol>
 	</div>
     <script
@@ -120,12 +119,25 @@
     ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
-		 $('#checkLoan').click(function() {
-			$("#loanId_hidden").val($("#loanId").text());
-			 console.log($("#loanId_hidden").val());
-			$("#userName_hidden").val($("#userName").text());
-			console.log($("#userName_hidden").val()); 
+		 $('.checkLoan').click(function() {
+			 console.log(this.id);
+			 var i = this.id;
+ 			$("#id_hidden"+i).val($("#id"+i).text());
+			 console.log($("#id_hidden"+i).val());
+ 			$("#unh"+i).val($("#un"+i).text());
+			console.log($("#unh"+i).val());   
 		 });
+		 
+		 $(window).bind('beforeunload', function(){
+			 <% if(loanList != null) { %>
+				 <% loanList.clear(); %>
+			<% } %>
+		});
+		 
+<%-- 		 $(window).bind('beforeunload', function(){
+			 <% if(countLoans != null) { %>
+				 <% countLoans.clear(); %>
+			<% } %> --%>
   </script>
   </body>
 </html>
