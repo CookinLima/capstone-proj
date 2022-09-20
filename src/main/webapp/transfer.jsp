@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-image:url(./images/building1.jpeg); background-repeat:no-repeat; background-size:cover;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>

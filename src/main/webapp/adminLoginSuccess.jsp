@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-color:#659dbd;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -23,13 +23,14 @@
 	<%ArrayList<Integer> countLoans = (ArrayList<Integer>)session.getAttribute("countLoans");%>
 							
 	<div class="container w-50 mx-auto mt-5">
-		<ol class="list-group list-group-numbered">
+		<h5>You have <b><u><%=countLoans.get(2)%></u></b> pending loans left</h5>
+		<ol class="list-group">
 			<li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapseExample">
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">Pending Loan</div>
 					      Click to view all pending loans
 					 </div>
-				<span class="badge bg-danger rounded-pill"><%=countLoans.get(2)%></span>
+				<span class="badge bg-danger rounded-pill mt-3"><%=countLoans.get(2)%></span>
 			 </li>
 			  <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %>
 			  <%	if(loanList != null)  { %>
@@ -38,31 +39,34 @@
 							Loan loan = loanList.get(i);
 							if(loan.getApprove() == 0) {
 					%>
-					<form action="/capstone/fetchLoanCustomerDetails">
-						<div class="card collapse" id="collapse5">
-							<div class="row">
-								<div class="col ms-4">
-									<p class="mt-2">
-										loan type: <%=loan.getLoanName() %>
-									</p>
-									<span>loan id:</span><p id=<%="id"+i%>><%=loan.getId()%></p>
+					
+					<div class="card collapse" id="collapse5">
+						<form action="/capstone/fetchLoanCustomerDetails">
+							<div class="row g-0">
+								<div class="col-4 ms-4">
+									<b>loan type:</b><p class="mt-2"><%=loan.getLoanName() %></p>
+									<b class="font-weight-bold">loan id:</b><p id=<%="id"+i%>><%=loan.getId()%></p>
 									<input type="hidden" id=<%="id_hidden"+i%> name="loanId" />
-									<span>username:</span><p id=<%="un"+i %>><%=loan.getUserName()%></p>
-									<input type="hidden" id=<%="unh"+i%> name="userName" />
 								</div>
-								<div class="col">
-									<button id=<%=i%> type="submit" class="checkLoan btn btn-primary mt-4">Check Loan</button>
+								<div class="col-4">
+									<b class="font-weight-bold">username:</b><p id=<%="un"+i %>><%=loan.getUserName()%></p>
+									<input type="hidden" id=<%="unh"+i%> name="userName" />
+									<b>Principal sum:</b><p class="mt-2"><%=loan.getPrincipal() %></p>
+								</div>
+								<div class="col-3">
+									<button id=<%=i%> type="submit" class="checkLoan btn btn-outline-primary mt-5 ms-5">Check Loan</button>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+					</div>
+					
 					<% } } }%>
 					  <li class="list-group-item d-flex justify-content-between align-items-start" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
 					    <div class="ms-2 me-auto">
 					      <div class="fw-bold">Approved Loan</div>
 					      Click to view all approved loans
 					    </div>
-					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(0)%></span>
+					    <span class="badge bg-primary rounded-pill mt-3"><%=countLoans.get(0)%></span>
 					  </li>
 					<%-- <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %> --%>
 					  <%	if(loanList != null)  { %>
@@ -88,7 +92,7 @@
 					      <div class="fw-bold">Rejected Loan</div>
 					      Click to view all rejected loans
 					    </div>
-					    <span class="badge bg-primary rounded-pill"><%=countLoans.get(1)%></span>
+					    <span class="badge bg-primary rounded-pill mt-3"><%=countLoans.get(1)%></span>
 					  </li>		
 					<%-- <% ArrayList<Loan> loanList = (ArrayList<Loan>)session.getAttribute("fetchLoans"); %> --%>
 					  <%	if(loanList != null)  { %>
@@ -128,11 +132,11 @@
 			console.log($("#unh"+i).val());   
 		 });
 		 
-		 $(window).bind('beforeunload', function(){
+<%-- 		 $(window).bind('beforeunload', function(){
 			 <% if(loanList != null) { %>
 				 <% loanList.clear(); %>
 			<% } %>
-		});
+		}); --%>
 		 
 <%-- 		 $(window).bind('beforeunload', function(){
 			 <% if(countLoans != null) { %>

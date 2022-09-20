@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-image:url(./images/family1.jpeg);">
     <jsp:include page="navbar.jsp">
       <jsp:param name="login" value="" />
     </jsp:include>

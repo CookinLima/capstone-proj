@@ -36,6 +36,7 @@ public class validateAdminLogin extends HttpServlet {
 			 if(fetchAllLoans != null) {
 					HttpSession session = req.getSession(true);
 					session.setAttribute("login", adminUserName);
+					session.setAttribute("admin", adminUserName);
 					session.setAttribute("fetchLoans", fetchAllLoans);
 					session.setAttribute("countLoans", countLoans);
 					resp.sendRedirect("./adminLoginSuccess.jsp");

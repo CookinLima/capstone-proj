@@ -62,6 +62,11 @@
                 </li>
               </ul> -->
             </li>
+            <%if(session.getAttribute("admin") != null) { %> 
+            <li class="nav-item px-4">
+              <a class="nav-link" href="/capstone/adminLoginSuccess.jsp">Administrator</a>
+            </li>
+            <% } %>
           </ul>
           <% if(session.getAttribute("login") == null) { %>
           <ul class="navbar-nav ms-auto me-3">

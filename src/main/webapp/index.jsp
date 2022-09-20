@@ -28,6 +28,7 @@
 		</div>
 	</div>
 	<div id="second-div" class="main-div">
+		
 		<div class="d-flex container justify-content-around">
 			<div class=row>
 				<div class="col-4">
@@ -76,6 +77,8 @@
 	<div id="fourth-div" class="main-div">
 			<div id="login-container" class="container w-50 mt-2 mx-auto">
 	<!-- style="background-color: #EDF5E1 !important; -->
+		<h2>Loan Calculator</h2>
+		<h5 class="mb-4">Interested in getting a loan? Use our calculator to see your interest rate!</h5>
 		<form action="/capstone/submitLoan">
 			<select id="selectVal" class="form-select mb-3" name="loanName" aria-label="Default select example" required>
 			  <option value="">Choose a loan option</option>
