@@ -18,17 +18,16 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-		  
+	
 	<div id="first-div" class="main-div">
 		<div class="info shadow-lg">
 			<h2>Long Term Value</h2>
 			<h5>Our approach to sustainability</h5>
 			<p>Here is how we are managing our business in a balanced and responsible way.</p>
 			<button class="btn btn-primary">Find out</button>			
-		</div>
+		</div> 
 	</div>
 	<div id="second-div" class="main-div">
-		
 		<div class="d-flex container justify-content-around">
 			<div class=row>
 				<div class="col-4">
@@ -78,7 +77,7 @@
 			<div id="login-container" class="container w-50 mt-2 mx-auto">
 	<!-- style="background-color: #EDF5E1 !important; -->
 		<h2>Loan Calculator</h2>
-		<h5 class="mb-4">Interested in getting a loan? Use our calculator to see your interest rate!</h5>
+		<h5 class="mb-5">Interested in getting a loan? Use our calculator to see your interest rate!</h5>
 		<form action="/capstone/submitLoan">
 			<select id="selectVal" class="form-select mb-3" name="loanName" aria-label="Default select example" required>
 			  <option value="">Choose a loan option</option>
