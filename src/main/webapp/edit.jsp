@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="app.css" />
 
   </head>
-  <body style="background-image:url(./images/banking1.jpeg);">
+  <body style="background-image:url(./images/banking1.jpeg); background-repeat: no-repeat; background-size: cover;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -50,7 +50,7 @@
 	<%@ page import = "com.ncs.customerModel.Customer" %>
 	
 	<% Customer customer = (Customer)session.getAttribute("customerDetails"); %>
-	<div class="container mx-auto w-50">
+	<div id="login-container" class="container mx-auto w-50 mt-5">
 		<h3 class="mt-4">My Profile</h3>
 		<h5>Manage and protect your account</h5>
 		<hr>

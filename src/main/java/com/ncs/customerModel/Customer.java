@@ -21,9 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="customer_details")
 public class Customer {
-	private static ArrayList<Customer> recipients = new ArrayList<Customer>();
-	private static ArrayList<Customer> transactions = new ArrayList<Customer>();
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -365,7 +362,7 @@ public class Customer {
 //				Need to convert string to bigdecimal first
 				String balance = res.getString(9);
 				BigDecimal balanceToDecimal = new BigDecimal(balance);
-				System.out.println("in fetchBalance method: " + balanceToDecimal);
+				System.out.println("in fetchBalance method: " + balance);
 				return balanceToDecimal;
 			}
 			
@@ -415,7 +412,7 @@ public class Customer {
 		return null;
 	}
 	
-	public static boolean transfer(String cusUserName, String rUserName, String transferAmount) {
+	public static int transfer(String cusUserName, String rUserName, String transferAmount) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -442,6 +439,10 @@ public class Customer {
 //			change datatype to bigdecimal
 			BigDecimal transferAmountToDecimal = new BigDecimal(transferAmount);
 			
+			if(transferAmountToDecimal.compareTo(senderBalance) > 0) {
+				System.out.println("transfer amount greater than sender balance");
+				return 3;
+			}
 //			calculate new balance on both accounts
 			BigDecimal newSenderBalance = senderBalance.subtract(transferAmountToDecimal);
 			BigDecimal newRecipientBalance = recipientBalance.add(transferAmountToDecimal);
@@ -458,14 +459,16 @@ public class Customer {
 				int row2 = pstmt.executeUpdate();
 				if(row2 > 0) {
 					boolean addTransaction = Customer.addTransaction(cusUserName, rUserName, transferAmount);
-					return addTransaction;
+					if(addTransaction) {
+						return 1;
+					}
 				}
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return 0;
 	}
 	
 	public static boolean addTransaction(String cusUserName, String rUserName, String amount) {
@@ -586,6 +589,7 @@ public class Customer {
 		Statement stmt = null;
 		ResultSet res = null;
 		PreparedStatement pstmt = null;
+		ArrayList<Customer> recipients = new ArrayList<Customer>();
 		try {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			System.out.println("Driver loaded successfully");
@@ -621,6 +625,7 @@ public class Customer {
 		Statement stmt = null;
 		ResultSet res = null;
 		PreparedStatement pstmt = null;
+		ArrayList<Customer> transactions = new ArrayList<Customer>();
 		try {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			System.out.println("Driver loaded successfully");

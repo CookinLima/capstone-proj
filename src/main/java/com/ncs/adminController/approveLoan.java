@@ -35,6 +35,7 @@ public class approveLoan extends HttpServlet {
 					HttpSession session = req.getSession(true);
 					session.setAttribute("fetchLoans", fetchAllLoans);
 					session.setAttribute("countLoans", countLoans);
+					session.setAttribute("approve", "approve");
 					resp.sendRedirect("./adminLoginSuccess.jsp");
 				} else {
 					System.out.println("arraylist null");

@@ -22,11 +22,25 @@
 	  <div class="modal-dialog modal-sm">
 		<div class="modal-content">
 		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Transfer Success!</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Transfer Success</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		  </div>
 		  <div class="modal-body">
 				Click the cross to view your changes
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="onBalanceLow" tabindex="-1">
+	  <div class="modal-dialog modal-sm">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Your Balance is too low</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		  </div>
+		  <div class="modal-body">
+				Please transfer an amount that is equal to or lesser than your balance
 		  </div>
 		</div>
 	  </div>
@@ -40,17 +54,16 @@
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		  </div>
 		  <div class="modal-body">
-				Recipient username is invalid, please try again.
+				Invalid recipient
 		  </div>
 		</div>
 	  </div>
-	</div>
+	</div>>
 	
-	<div id="login-container" class="container w-50 mt-5 mx-auto">
+	<div id="login-container" class="container w-50 mt-3 mx-auto">
 		<h3>To</h3>
 		<hr>
-		<form action="/capstone/transfer" 
-		oninput='transferAmount.setCustomValidity(transferAmount.value < <% session.getAttribute("cusBalance"); %> ? "Your transfer amount exceeds your current account balance." : "")'>
+		<form action="/capstone/transfer">
 			<select class="form-select mb-3 selectpicker" aria-label="Default select example">
 			  <option>Choose an option</option>
 			  <option value="1">Choose an existing recipient</option>
@@ -60,7 +73,6 @@
 			  <option id="picker1-selected" selected>Choose a recipient</option>
 				<%@ page import = "com.ncs.customerModel.Customer" %>
 				<%@ page import = "java.util.ArrayList" %>
-			
 				<% ArrayList<Customer> recipientList = (ArrayList<Customer>)session.getAttribute("recipientList"); %>
 				<%	if(recipientList != null)  { %>
 					<%
@@ -80,13 +92,13 @@
 				<% out.println("From your account: " + session.getAttribute("cusUserName")); %>
 			</div>
 			<div style="font-size:18px;" class="mb-3">
-				<% out.println("Your balance: $ " + session.getAttribute("cusBalance")); %>
+				<% out.println("Your Balance: $" + session.getAttribute("cusBalance")); %>
 			</div>
   			<div class="mb-3">
 				<label for="recipient_name" class="form-label">Transfer Amount</label>
-				<input type="text" class="form-control" placeholder="$" name="transferAmount" required>
+				<input id="amount" type="text" class="form-control" placeholder="$" name="transferAmount" required>
 			 </div>
-			  <button type="submit" class="btn btn-primary">submit</button>
+			  <button id="submitBtn" type="submit" class="btn btn-primary">submit</button>
 		</form>
 	</div>
 	
@@ -114,11 +126,11 @@
 		        }
 		    });
 		 
-		 $(window).bind('beforeunload', function(){
+<%--  		$(window).bind('beforeunload', function(){
 			 <% if(recipientList != null) { %>
 				 <% recipientList.clear(); %>
 			<% } %>
-		});
+		});  --%>
 		
 		<% if(session.getAttribute("transfer") != null) { %>
 		    $(document).ready(function(){
@@ -126,6 +138,13 @@
 		    });
 		<% } %>
 		<% request.getSession().setAttribute("transfer", null);%>
+		
+		<% if(session.getAttribute("balanceLow") != null) { %>
+		    $(document).ready(function(){
+		        $("#onBalanceLow").modal('show');
+		    });
+		<% } %>
+		<% request.getSession().setAttribute("balanceLow", null);%>
 		
 		<% if(session.getAttribute("transferFail") != null) { %>
 	    	$(document).ready(function(){

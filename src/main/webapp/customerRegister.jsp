@@ -13,58 +13,54 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-image:url(./images/banking1.jpeg);">
+  <body style="background-image:url(./images/banking1.jpeg); background-repeat: no-repeat; background-size: cover;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-	<div id="login-container" class="container w-50 h-90 mt-2 mx-auto"">
+	<div id="login-container" class="container w-50 h-90 mt-5 mx-auto"">
 	<!-- style="background-color: #EDF5E1 !important; -->
 		<form action="/capstone/createCustomer" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")' >
 			<div class="row mb-2">
-  				<div class="col">
-  					<label for="firstName" class="form-label">First Name</label>
-    				<input type="text" class="form-control" placeholder="First name" aria-label="First name" name="firstName">
+  				<div class="col form-floating">
+  					<input type="text" id="firstName" class="form-control" placeholder="First name" name="firstName">	
+  					<label for="firstName" class="form-label ms-2">First Name</label>   				
   				</div>
-  				<div class="col">
-  					<label for="lastName" class="form-label">Last Name</label>
-    				<input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="lastName">
+  				<div class="col form-floating">
+  					<input type="text" id="lastName" class="form-control" placeholder="Last name" name="lastName">
+  					<label for="lastName" class="form-label ms-2">Last Name</label>   				
   				</div>
 			</div>
 			<div class="row mb-2">
-  				<div class="col">
-					<label for="username" class="form-label">Username</label>
-					<input type="text" class="form-control" placeholder="Username" name="userName" required>
+  				<div class="col form-floating">
+  					<input type="text" id="username" class="form-control mt-3" placeholder="Username" name="userName" required>
+					<label for="username" class="form-label ms-2 mt-3">Username</label>
   				</div>
-  				<div class="col">
-  					<label for="lastName" class="form-label">Initial Deposit</label>
-    				<input type="text" class="form-control" placeholder="$" aria-label="Last name" name="deposit" aria-label="Amount (to the nearest dollar)">
+  				<div class="col form-floating">
+  					<input type="text" class="form-control mt-3" placeholder="$" name="deposit" >
+  					<label  id="deposit" for="deposit" class="form-label ms-2 mt-3">Initial Deposit</label>
   				</div>
 			</div>
-<!--   			<div class="mb-3">
-				<label for="username" class="form-label">Username</label>
-				<input type="text" class="form-control" placeholder="Username" name="userName" required>
-			  </div> -->
 			  <div class="row mb-2">
-  				<div class="col">
-				    <label for="exampleInputPassword1" class="form-label">Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" required>
+  				<div class="col form-floating">
+				    <input type="password" class="form-control mt-3" id="exampleInputPassword1" name="password" placeholder="Password" required>
+				    <label for="exampleInputPassword1" class="form-label ms-2 mt-3">Password</label>
   				</div>
-  				<div class="col">
-				    <label for="exampleInputPassword2" class="form-label">Retype Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword2" name="password2" placeholder="Retype password" required>
+  				<div class="col form-floating">
+  					<input type="password" class="form-control mt-3" id="exampleInputPassword2" name="password2" placeholder="Retype password" required>
+				    <label for="exampleInputPassword2" class="form-label ms-2 mt-3">Retype Password</label>
   				</div>
 			</div>
-			  <div class="mb-2">
-				<label for="username" class="form-label">Address</label>
-				<input type="text" class="form-control" placeholder="address" name="address" required>
+			  <div class="mb-2 form-floating">
+			  	<input type="text" class="form-control mt-3" id="address" placeholder="address" name="address" required>
+				<label for="address" class="form-label">Address</label>
 			  </div>
-			  <div class="mb-2">
-				<label for="username" class="form-label">Phone Number</label>
-				<input type="text" class="form-control" placeholder="Phone number" name="number" required>
+			  <div class="mb-2 form-floating mt-3">
+			  	<input type="text" id="number" class="form-control" placeholder="Phone number" name="number" required>
+				<label for="number" class="form-label">Phone Number</label>				
 			  </div>
-			  <div class="mb-3">
-				<label for="username" class="form-label">Email</label>
-				<input type="text" class="form-control" placeholder="youremail@email.com" name="email" required>
+			  <div class="mb-3 form-floating mt-3">
+			  	<input type="text" id="email" class="form-control" placeholder="youremail@email.com" name="email" required>
+				<label for="email" class="form-label">Email</label>				
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>

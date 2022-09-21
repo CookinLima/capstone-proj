@@ -26,14 +26,14 @@ public class loadTransferPage extends HttpServlet {
 
 		ArrayList<Customer> addRecipient = Customer.fetchAllRecipient(cusUserName);
 		BigDecimal cusBalance = Customer.fetchBalance(cusUserName);
-		
-		 if(addRecipient.size() > 0 && cusBalance != null) {
-			session.setAttribute("recipientList", addRecipient);
-			session.setAttribute("cusBalance", cusBalance);
-			resp.sendRedirect("./transfer.jsp");
-		} else {
-			session.setAttribute("recipientList", null);
-			resp.sendRedirect("./transfer.jsp");
-		}
+
+		session.setAttribute("recipientList", addRecipient);
+		session.setAttribute("cusBalance", cusBalance);
+			
+		resp.sendRedirect("./transfer.jsp");
+
+//			session.setAttribute("recipientList", null);
+//			resp.sendRedirect("./transfer.jsp");
+
 	}
 }

@@ -52,11 +52,11 @@
 			<div class="row mb-3">
   				<div class="col">
 					<label for="occupation" class="form-label">What is your occupation</label>
-					<input type="text" class="form-control" placeholder="occupation" name="occupation" required>
+					<input type="text" class="form-control" placeholder="Occupation" name="Occupation" required>
   				</div>
   				<div class="col">
-  					<label for="income" class="form-label">what is your current income</label>
-    				<input type="text" class="form-control" placeholder="current income" aria-label="Last name" name="income" aria-label="Amount (to the nearest dollar)">
+  					<label for="income" class="form-label">What is your current income</label>
+    				<input type="text" class="form-control" placeholder="Current income" aria-label="Last name" name="income" aria-label="Amount (to the nearest dollar)">
   				</div>
 			</div>
 			<select id="selectVal" class="form-select mb-3" name="loanName" aria-label="Default select example" required>
@@ -67,7 +67,7 @@
 			</select>
 			  <div class="mb-4">
 				<label for="principal" class="form-label">How much do you want to borrow?</label>
-				<input id="pVal" type="text" class="form-control" placeholder="principal amount: $" name="principal" required>
+				<input id="pVal" type="text" class="form-control" placeholder="Principal amount: $" name="principal" required>
 			  </div>
 			  <div class="mb-3">
 				  <label for="customRange2" class="form-label">How long do you intent to borrow for?</label>

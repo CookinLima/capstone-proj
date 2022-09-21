@@ -32,6 +32,7 @@ public class rejectLoan extends HttpServlet {
 					HttpSession session = req.getSession(true);
 					session.setAttribute("fetchLoans", fetchAllLoans);
 					session.setAttribute("countLoans", countLoans);
+					session.setAttribute("reject", "reject");
 					resp.sendRedirect("./adminLoginSuccess.jsp");
 				} else {
 					System.out.println("arraylist null");

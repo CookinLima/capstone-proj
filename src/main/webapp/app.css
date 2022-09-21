@@ -54,6 +54,16 @@ section {
 	color: white;
 } */
 
+#login-container {
+	background-color: white;
+	opacity: 0.9;
+	padding: 1em;
+	border: 1px solid;
+  	padding: 10px;
+  	box-shadow: 1px 1px 1px 1px rgba(31, 73, 125, 0.8), 1px 1px 1px 1px rgba(31, 73, 125, 0.8);
+  	border-radius: 5px;
+}
+
 
 li {
   border-right: 1px solid #ededed !important;

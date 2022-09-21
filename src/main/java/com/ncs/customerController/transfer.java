@@ -26,18 +26,22 @@ public class transfer extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
 	
-		boolean fetchCustomer = Customer.transfer(cusUserName, rUserName, transferAmount);
+		int fetchCustomer = Customer.transfer(cusUserName, rUserName, transferAmount);
+		System.out.println("in transfer.java: " + fetchCustomer);
 //		System.out.println(fetchCustomer);
-		if(fetchCustomer) {
+		if(fetchCustomer == 1) {
 			BigDecimal cusBalance = Customer.fetchBalance(cusUserName);
 			ArrayList<Customer> addRecipient = Customer.fetchAllRecipient(cusUserName);
 			session.setAttribute("recipientList", addRecipient);
 			session.setAttribute("transfer", "success");
 			session.setAttribute("cusBalance", cusBalance);
 			resp.sendRedirect("/capstone/transfer.jsp");
+		} else if(fetchCustomer == 3){
+			session.setAttribute("balanceLow", "low");
+			resp.sendRedirect("/capstone/transfer.jsp");
 		} else {
 			session.setAttribute("transferFail", "fail");
-			resp.sendRedirect("/capstone/transfer.jsp");
+			resp.sendRedirect("/capstone/transfer.jsp");			
 		}
 	}
 }

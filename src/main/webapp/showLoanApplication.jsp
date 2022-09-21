@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body>
+  <body style="background-color:#659dbd;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -31,10 +31,10 @@
 				  <div class="card-body">
 				  	<div class="row mb-3">
 		  				<div class="col">
-							<p class="card-text">first name: <%=customer.getFirstName()%></p>
+							<p class="card-text">First name: <%=customer.getFirstName()%></p>
 		  				</div>
 		  				<div class="col">
-							<p class="card-text">last name: <%=customer.getLastName()%></p>
+							<p class="card-text">Last name: <%=customer.getLastName()%></p>
 		  				</div>
 					</div>
 					<div class="row mb-3">
@@ -70,18 +70,24 @@
 		  				</div>
 					</div>
 				  </div>
-				  <div class="card-footer text-muted">
-				  <form action="/capstone/approveLoan">
-				  	<input type="hidden" class="loanId_hidden" name="loanId"/>
-				  	<input type="hidden" name="approve" value="1"/>
-				    <button type="submit" id="approveBtn" class="btn btn-primary my-2">Approve</button>
-				  </form>
-				  <form action="/capstone/rejectLoan">
-					<input type="hidden" class="loanId_hidden" name="loanId" />
-					<input type="hidden" name="reject" value="2"/>
-					<button type="submit" id="rejectBtn" class="btn btn-primary my-2">Reject</button>
-				  </form>
+				  <div class="container card-footer text-muted justify-content-evenly">
+				  <div class="row justify-content-evenly">
+					  <form action="/capstone/approveLoan" class="col-6 text-center" >
+					  	<input type="hidden" class="loanId_hidden" name="loanId"/>
+					  	<input type="hidden" name="approve" value="1"/>
+					    <button type="submit" id="approveBtn" class="btn btn-primary my-2">Approve</button>
+					  </form>
+					  <form action="/capstone/rejectLoan" class="col-6 text-center">
+						<input type="hidden" class="loanId_hidden" name="loanId" />
+						<input type="hidden" name="reject" value="2"/>
+						<button type="submit" id="rejectBtn" class="btn btn-primary my-2">Reject</button>
+					  </form>				  
 				  </div>
+<!-- 					  <div class="card-footer text-muted">
+
+					  </div>	 -->			  
+				  </div>
+
 				</div>
 			</div>
 		<% } %>

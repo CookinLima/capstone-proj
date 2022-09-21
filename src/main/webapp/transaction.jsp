@@ -29,7 +29,7 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-		<div class="container w-75 mx-auto mt-5">
+		<div id="login-container" class="container w-75 mx-auto mt-5">
 			<table id="example" class="table table-striped" style="width:100%">
 				 <thead>
 				   <tr>
