@@ -124,6 +124,7 @@
 		                aria-labelledby="navbarDropdownMenuLink"
 		              >
 		                <li><a class="dropdown-item" href="/capstone/fetchCustomer">Edit Profile</a></li>
+		                <li><a class="dropdown-item" href="/capstone/viewLoan">Your loans</a></li>
 		                <li><a class="dropdown-item" href="logout.jsp">Logout</a></li>
 		              </ul>
 		            </li>

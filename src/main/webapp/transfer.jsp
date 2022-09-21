@@ -58,7 +58,7 @@
 		  </div>
 		</div>
 	  </div>
-	</div>>
+	</div>
 	
 	<div id="login-container" class="container w-50 mt-3 mx-auto">
 		<h3>To</h3>
@@ -141,7 +141,7 @@
 		
 		<% if(session.getAttribute("balanceLow") != null) { %>
 		    $(document).ready(function(){
-		        $("#onBalanceLow").modal('show');
+		        $("#onBalanceLow").modal('show'); 
 		    });
 		<% } %>
 		<% request.getSession().setAttribute("balanceLow", null);%>

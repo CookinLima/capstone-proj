@@ -26,9 +26,6 @@ public class submitLoan extends HttpServlet {
 		
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
-		
-		System.out.println(annualInterest); 
-		System.out.println(totalInterest);
 	
 		int getLoan = Loan.getLoan(cusUserName, loanName, principal, duration, annualInterest, totalInterest, occupation, income);
 		System.out.println(getLoan);

@@ -55,18 +55,18 @@
 					</div>
 					<div class="row mb-3">
 		  				<div class="col">
-							<p class="card-text">Principal Sum: <%=loan.getPrincipal()%></p>
+							<span class="card-text">Principal Sum: $</span><span id="principal"><%=loan.getPrincipal()%></span>
 		  				</div>
 		  				<div class="col">
-							<p class="card-text">Duration: <%=loan.getDuration()%></p>
+							<p class="card-text">Duration: <%=loan.getDuration()%><span> years</span></p>
 		  				</div>
 					</div>
 					<div class="row mb-3">
 		  				<div class="col">
-							<p class="card-text">Total Interest payable:$ <%=loan.getTotalIR()%></p>
+							<p class="card-text">Total Interest payable: $<%=loan.getTotalIR()%></p>
 		  				</div>
 		  				<div class="col">
-							<p class="card-text">Annual Interest Rate:$ <%=loan.getAnnualIR()%></p>
+							<p class="card-text">Annual Interest Rate: $<%=loan.getAnnualIR()%></p>
 		  				</div>
 					</div>
 				  </div>
@@ -75,6 +75,8 @@
 					  <form action="/capstone/approveLoan" class="col-6 text-center" >
 					  	<input type="hidden" class="loanId_hidden" name="loanId"/>
 					  	<input type="hidden" name="approve" value="1"/>
+					  	<input type="hidden" name="applicantUserName" value="<%=customer.getUserName()%>"/>
+					  	<input type="hidden" name="principal" class="principal_hidden"/>
 					    <button type="submit" id="approveBtn" class="btn btn-primary my-2">Approve</button>
 					  </form>
 					  <form action="/capstone/rejectLoan" class="col-6 text-center">
@@ -100,12 +102,14 @@
 	<script>
 		 $('#approveBtn').click(function() {
 			$(".loanId_hidden").val($("#loanId").text());
-			 console.log($("#loanId_hidden").val());
+			$(".principal_hidden").val($("#principal").text());
+			 console.log($(".principal_hidden").val());
+			 
 		 });
 		 $('#rejectBtn').click(function() {
-				$(".loanId_hidden").val($("#loanId").text());
-				 console.log($("#loanId_hidden").val());
-		});
+			$(".loanId_hidden").val($("#loanId").text());
+			console.log($("#loanId_hidden").val());
+		 });
   </script>
   </body>
 </html>

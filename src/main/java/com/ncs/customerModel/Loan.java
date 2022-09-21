@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Loan {
@@ -205,6 +207,58 @@ public class Loan {
 		return loans;
 	}
 	
+	public static ArrayList<Loan> fetchAllUserLoans(String userName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		ArrayList<Loan> loans = new ArrayList<Loan>();
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from loan where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			// I want to return the result from s
+			pstmt.setString(1, userName);
+			res = pstmt.executeQuery();
+			System.out.println("fetchAllLoans before res.next");
+			
+			while(res.next()) {
+				System.out.println("fetchAllLoans res.next working");
+				int id = res.getInt(1);
+				String loanName = res.getString(2);
+				String username = res.getString(3);
+				String principalSum = res.getString(4);
+				BigDecimal principalSumToDecimal = new BigDecimal(principalSum);
+				String totalIR = res.getString(5);
+				BigDecimal totalIRToDecimal = new BigDecimal(totalIR);
+				int duration = res.getInt(6);
+				String annualIR = res.getString(8);
+				BigDecimal annualIRToDecimal = new BigDecimal(annualIR);
+				int approve = res.getInt(9);
+				String occupation = res.getString(10);
+				String income = res.getString(11);
+				BigDecimal incomeToDecimal = new BigDecimal(income);
+				
+				Loan fetchLoans = Loan.createLoan(id,loanName, username, principalSumToDecimal, totalIRToDecimal, 
+						annualIRToDecimal, approve, occupation, incomeToDecimal, duration);
+				loans.add(fetchLoans);
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return loans;
+	}
+	
+	
 	public static Loan fetchLoan(int id) {
 		Connection con = null;
 		Statement stmt = null;
@@ -252,7 +306,7 @@ public class Loan {
 		return null;
 	}
 	
-	public static boolean approveLoan(String loanId) {
+	public static boolean approveLoan(String loanId, String principal, String applicantUserName) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -274,12 +328,95 @@ public class Loan {
 			
 			int row = pstmt.executeUpdate();
 			if(row > 0) {
-				return true;
+				boolean creditLoan = creditLoanAmount(principal, applicantUserName);
+				if(creditLoan) {
+					boolean addLoanTransaction = addLoanTransaction("bank admin", applicantUserName, principal);
+					return addLoanTransaction;
+				}
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public static boolean creditLoanAmount(String principal, String applicantUserName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+//			store sql command into s
+			String s = "update customer_details set balance=? where username=?";
+// 			Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+// 			I want to return the result from s
+//			res = stmt.executeQuery(s);
+			BigDecimal getCurrentBal = Customer.fetchBalance(applicantUserName);
+			BigDecimal principalToDecimal = new BigDecimal(principal);
+			
+			System.out.println("In creditloanamount currBal" + getCurrentBal);
+			System.out.println("In creditloanamount principal" + principalToDecimal);
+			
+			BigDecimal newBal = getCurrentBal.add(principalToDecimal);
+			
+			pstmt.setString(1, newBal.toString());
+			pstmt.setString(2, applicantUserName);
+			
+			int rows = pstmt.executeUpdate();
+			if(rows > 0) {
+				System.out.println("In creditLoanAmount: success");
+				return true;
+			} 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("In creditLoanAmount: failed");
+		return false;
+	}
+	
+	public static boolean addLoanTransaction(String cusUserName, String rUserName, String amount) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+//			store sql command into s
+			String s = "insert into transaction(sender, sendee, amount, datetime) values(?,?,?,?)";
+// 			Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+// 			I want to return the result from s
+//			res = stmt.executeQuery(s);
+			pstmt.setString(1, cusUserName);
+			pstmt.setString(2, rUserName);
+			pstmt.setString(3, amount);
+			pstmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+			int rows = pstmt.executeUpdate();
+			if(rows > 0) {
+				System.out.println("In addLoanTransaction: success");
+				return true;
+			} 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("In addLoanTransaction: failed");
 		return false;
 	}
 	

@@ -29,7 +29,7 @@
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
-		<div id="login-container" class="container w-75 mx-auto mt-5">
+		<div id="login-container" class="container w-75 mx-auto mt-3">
 			<table id="example" class="table table-striped" style="width:100%">
 				 <thead>
 				   <tr>
@@ -70,13 +70,13 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script> 
-	<script>
+<%-- 	<script>
 		 $(window).bind('beforeunload', function(){
 			 <% if(transactionList != null) { %>
 				 <% transactionList.clear(); %>
 			<% } %>
 		})
-	</script>
+	</script> --%>
 
   </body>
 </html>

@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-cyaaaaaaaaa">
+  <body style="background-color: #659dbd;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>

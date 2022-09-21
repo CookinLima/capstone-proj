@@ -113,6 +113,13 @@
 		<servlet-name>rejectLoan</servlet-name>
 		<servlet-class>com.ncs.adminController.rejectLoan</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>viewLoan</display-name>
+		<servlet-name>viewLoan</servlet-name>
+		<servlet-class>com.ncs.customerController.viewLoan</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>validateAdminLogin</servlet-name>
 		<url-pattern>/validateAdminLogin</url-pattern>
@@ -176,6 +183,10 @@
 	<servlet-mapping>
 		<servlet-name>rejectLoan</servlet-name>
 		<url-pattern>/rejectLoan</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>viewLoan</servlet-name>
+		<url-pattern>/viewLoan</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

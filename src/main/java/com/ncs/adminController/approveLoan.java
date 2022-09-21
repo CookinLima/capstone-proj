@@ -19,8 +19,10 @@ public class approveLoan extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String loanId = req.getParameter("loanId");
+		String principal = req.getParameter("principal");
+		String applicantUserName = req.getParameter("applicantUserName");
 		
-		boolean approveLoan = Loan.approveLoan(loanId);
+		boolean approveLoan = Loan.approveLoan(loanId, principal, applicantUserName);
 		
 		if(approveLoan) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();

@@ -52,7 +52,7 @@
 			<div class="row mb-3">
   				<div class="col">
 					<label for="occupation" class="form-label">What is your occupation</label>
-					<input type="text" class="form-control" placeholder="Occupation" name="Occupation" required>
+					<input type="text" class="form-control" placeholder="Occupation" name="occupation" required>
   				</div>
   				<div class="col">
   					<label for="income" class="form-label">What is your current income</label>
