@@ -26,7 +26,7 @@ public class fetchLoanCustomerDetails extends HttpServlet {
 		System.out.println("in fetchloancustoemr.java " + loanId);
 		System.out.println("in transfer.java " + userName);
 
-		Customer fetchCustomer = Customer.fetchCustomerDetails(userName);
+		Customer fetchCustomer = Customer.CustomerDetails(userName);
 		
 		int loanIdToInt = Integer.parseInt(loanId); 
 		Loan fetchLoan = Loan.fetchLoan(loanIdToInt);

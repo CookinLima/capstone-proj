@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-color:#659dbd;">
+  <body style="background-image:url(./images/building1.jpeg); background-repeat: no-repeat; background-size: cover; height: 100vh; width: 100%;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -116,6 +116,9 @@
 		  				<div class="col">
 							<p class="card-text">Annual Interest Rate: $<%=loan.getAnnualIR()%></p>
 		  				</div>
+					</div>
+					<div class="row mb-3">
+						<p class="card-text">Reason for rejection: <%=loan.getReason() %></p>
 					</div>
 				  </div>	  
 				</div>	  

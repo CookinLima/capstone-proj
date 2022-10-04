@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-color:#659dbd;">
+  <body style="background-image:url(./images/building1.jpeg); background-repeat:no-repeat; background-size:cover;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -69,22 +69,27 @@
 							<p class="card-text">Annual Interest Rate: $<%=loan.getAnnualIR()%></p>
 		  				</div>
 					</div>
+					<div class="form-floating">
+					  <textarea class="form-control" placeholder="Reason for rejecting" id="floatingTextarea"></textarea>
+					  <label for="floatingTextarea">Reason for rejecting</label>
+					</div>
 				  </div>
 				  <div class="container card-footer text-muted justify-content-evenly">
-				  <div class="row justify-content-evenly">
-					  <form action="/capstone/approveLoan" class="col-6 text-center" >
-					  	<input type="hidden" class="loanId_hidden" name="loanId"/>
-					  	<input type="hidden" name="approve" value="1"/>
-					  	<input type="hidden" name="applicantUserName" value="<%=customer.getUserName()%>"/>
-					  	<input type="hidden" name="principal" class="principal_hidden"/>
-					    <button type="submit" id="approveBtn" class="btn btn-primary my-2">Approve</button>
-					  </form>
-					  <form action="/capstone/rejectLoan" class="col-6 text-center">
-						<input type="hidden" class="loanId_hidden" name="loanId" />
-						<input type="hidden" name="reject" value="2"/>
-						<button type="submit" id="rejectBtn" class="btn btn-primary my-2">Reject</button>
-					  </form>				  
-				  </div>
+					  <div class="row justify-content-evenly">
+						  <form action="/capstone/approveLoan" class="col-6 text-center">
+						  	<input type="hidden" class="loanId_hidden" name="loanId"/>
+						  	<input type="hidden" name="approve" value="1"/>
+						  	<input type="hidden" name="applicantUserName" value="<%=customer.getUserName()%>"/>
+						  	<input type="hidden" name="principal" class="principal_hidden"/>
+						    <button type="submit" id="approveBtn" class="btn btn-primary my-2">Approve</button>
+						  </form>
+						  <form action="/capstone/rejectLoan" class="col-6 text-center">
+							<input type="hidden" class="loanId_hidden" name="loanId" />
+							<input type="hidden" name="reject" value="2"/>
+							<input type="hidden" name="reason" class="reason_hidden"/>
+							<button type="submit" id="rejectBtn" class="btn btn-primary my-2">Reject</button>
+						  </form>				  
+					  </div>
 <!-- 					  <div class="card-footer text-muted">
 
 					  </div>	 -->			  
@@ -108,7 +113,8 @@
 		 });
 		 $('#rejectBtn').click(function() {
 			$(".loanId_hidden").val($("#loanId").text());
-			console.log($("#loanId_hidden").val());
+			$(".reason_hidden").val($("#floatingTextarea").val());
+			console.log($("#floatingTextarea").val());
 		 });
   </script>
   </body>

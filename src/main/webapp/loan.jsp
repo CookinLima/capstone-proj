@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-color: #f5d7d7">
+  <body style="background-image:url(./images/building1.jpeg); background-repeat: no-repeat; background-size: cover; height: 100vh; width: 100%;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
@@ -152,7 +152,7 @@
  				
  				if(selectedLoan == 'student') {
  					var newStudentIR = studentIR + ((selectedRange - 1) / 100);
-					var totalInterest = selectedPVal * newHousingIR;
+					var totalInterest = selectedPVal * newStudentIR;
 					var annualInterest = totalInterest / selectedRange;
 					$('#annualIR').val(annualInterest.toFixed(2));
 					$('#totalIR').val(totalInterest.toFixed(2));

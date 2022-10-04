@@ -18,9 +18,10 @@ public class rejectLoan extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String loanId = req.getParameter("loanId");
+		String reason = req.getParameter("reason");
 		
-		boolean rejectLoan = Loan.rejectLoan(loanId);
-		
+		System.out.println(reason);
+		boolean rejectLoan = Loan.rejectLoan(loanId ,reason);
 		
 		if(rejectLoan) {
 			ArrayList<Loan> fetchAllLoans = Loan.fetchAllLoans();

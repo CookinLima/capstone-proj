@@ -13,7 +13,7 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script>
 	    $(document).ready(function () {
-	        $('#example').DataTable();
+	        $('#transaction').DataTable();
 	    });
     </script>
     
@@ -25,12 +25,12 @@
     />   
     <link rel="stylesheet" href="app.css" />
   </head>
-  <body style="background-color: #f5d7d7">
+  <body style="background-image:url(./images/building1.jpeg); background-repeat:no-repeat; background-size:cover;">
  	<jsp:include page='navbar.jsp'>
     <jsp:param name="login" value=""/>
 	</jsp:include>
 		<div id="login-container" class="container w-75 mx-auto mt-3">
-			<table id="example" class="table table-striped" style="width:100%">
+			<table id="transaction" class="table table-striped" style="width:100%">
 				 <thead>
 				   <tr>
 				     <th scope="row">Date</th>

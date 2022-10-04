@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light py-0 ps-5" style="background-color:white;">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light py-0 ps-5 shadow-lg" style="background-color:white;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img
@@ -26,6 +26,7 @@
               <a class="nav-link" aria-current="page" href="/capstone/index.jsp">Home</a>
             </li>
             <li class="nav-item dropdown px-4">
+            <!-- <button class="btn btn-outline-primary" style="width: 180px !important; height: 70px !important;">bank of singapore</button> -->
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -51,16 +52,7 @@
             </li>
             <li class="nav-item px-4">
               <a class="nav-link" href="/capstone/loan.jsp">Loan</a>
-<!--               <ul
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <li><a class="dropdown-item" href="/capstone/loan.jsp">Loan</a></li>
-                <li><a class="dropdown-item" href="#">Housing Loan</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Student Loan</a>
-                </li>
-              </ul> -->
+              
             </li>
             <%if(session.getAttribute("admin") != null) { %> 
             <li class="nav-item px-4">

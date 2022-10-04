@@ -19,13 +19,47 @@
     <jsp:param name="login" value=""/>
 	</jsp:include>
 	
+<!-- 	<div id="marketing" class="container w-75 mx-auto">
+		<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="./images/house.jpeg" class="d-block w-100" alt="...">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="./images/car1.jpeg" class="d-block w-100" alt="...">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="./images/singapore.jpeg" class="d-block w-100" alt="...">
+		    </div>
+		  </div>
+		</div>
+	</div> -->
+	
 	<div id="first-div" class="main-div">
-		<div class="info shadow-lg">
-			<h2>Long Term Value</h2>
-			<h5>Our approach to sustainability</h5>
-			<p>Here is how we are managing our business in a balanced and responsible way.</p>
-			<button class="btn btn-primary">Find out</button>			
-		</div> 
+		<div class="container w-75">
+			<div class="row ">
+				<div class="info shadow-lg col-7 me-1 my-2">
+					<h4>Long term value</h4>
+					<p>Our approach to sustainability</p>
+					<p>Here is how we are managing our business in a balanced and responsible way.</p>
+					<button class="btn btn-primary">Find out</button>			
+				</div>
+				<div class="info shadow-lg col-4 my-2">
+					<h4>Financial report for the year 2022</h4>
+					<p>6% net profit in the year 2022</p>
+					<button class="btn btn-primary mt-3">Find out</button>			
+				</div>  
+			</div>
+			<div class="row">
+				<div class="info shadow-lg col-11">
+					<h4>New loan plans coming out for the year 2023</h4>
+					<p>Having trouble financing your assets?</p>
+					<p>We are going to release a series of loans that might interest you!</p>
+					<button class="btn btn-primary">Find out</button>			
+				</div> 
+			</div>
+		</div>
+
 	</div>
 	<div id="second-div" class="main-div">
 		<div class="d-flex container justify-content-around">
@@ -36,7 +70,7 @@
 					  <div class="card-body">
 					    <h5 class="card-title">Housing Loan</h5>
 					    <p class="card-text">Worried about financing your house? Fear not!</p>
-					    <a href="#" class="btn btn-primary">find out more</a>
+					    <a href="#" class="btn btn-primary">Find out more</a>
 					  </div>
 					</div>
 				</div>
@@ -47,7 +81,7 @@
 					  <div class="card-body">
 					    <h5 class="card-title">Auto Loan</h5>
 					    <p class="card-text">Thinking of buying your dream car? Wait no longer!</p>
-					    <a href="#" class="btn btn-primary">find out more</a>
+					    <a href="#" class="btn btn-primary">Find out more</a>
 					  </div>
 					</div>
 			</div>
@@ -58,7 +92,7 @@
 					  <div class="card-body">
 					    <h5 class="card-title">Student Loan</h5>
 					    <p class="card-text">Don't get distracted by your finances, get that degree!</p>
-					    <a href="#" class="btn btn-primary">find out more</a>
+					    <a href="#" class="btn btn-primary">Find out more</a>
 					  </div>
 					</div>
 			</div>
@@ -68,7 +102,7 @@
 	<div id="third-div" class="main-div">
 		<div class="info shadow-lg">
 			<h2>Get that peace of mind</h2>
-			<h5>Our approach to securing your future</h5>
+			<p>Our approach to securing your future</p>
 			<p>Here is how we are managing our business in a balanced and responsible way.</p>
 			<button class="btn btn-primary">Find out</button>						
 		</div>
@@ -110,8 +144,6 @@
 		</form>
 	</div>
 	</div>
-	
-	
 	<script>
 		const parallax = document.getElementById("first-div");
 		
@@ -156,7 +188,7 @@
 			
 			if(selectedLoan == 'student') {
 				var newStudentIR = studentIR + ((selectedRange - 1) / 100);
-				var totalInterest = selectedPVal * newHousingIR;
+				var totalInterest = selectedPVal * newStudentIR;
 				var annualInterest = totalInterest / selectedRange;
 				$('#annualIR').val(annualInterest.toFixed(2));
 				$('#totalIR').val(totalInterest.toFixed(2));

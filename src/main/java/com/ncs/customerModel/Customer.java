@@ -18,12 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="customer_details")
 public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -291,7 +286,7 @@ public class Customer {
 		return "wu";
 	}
 	
-	public static Customer fetchCustomerDetails(String userName) {
+	public static Customer CustomerDetails(String userName) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -337,42 +332,6 @@ public class Customer {
 		return null;
 	}
 	
-	public static BigDecimal fetchBalance(String userName) {
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet res = null;
-		PreparedStatement pstmt = null;
-		try {
-			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			System.out.println("Driver loaded successfully");
-			
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
-			System.out.println("Connection establised successfully!!");
-			
-			// store sql command into s
-			String s = "select * from customer_details where username=?";
-			// Allows sql to return statement
-			pstmt = con.prepareStatement(s);
-			pstmt.setString(1, userName);
-			// I want to return the result from s
-			res = pstmt.executeQuery();
-			System.out.println("before res.next");
-			if(res.next()) {
-				System.out.println("res.next working");
-//				Need to convert string to bigdecimal first
-				String balance = res.getString(9);
-				BigDecimal balanceToDecimal = new BigDecimal(balance);
-				System.out.println("in fetchBalance method: " + balance);
-				return balanceToDecimal;
-			}
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
 	public static Customer updateCustomerDetails(String userName,String firstName, String lastName, String address, String number, String email) {
 		Connection con = null;
 		Statement stmt = null;
@@ -401,7 +360,7 @@ public class Customer {
 			if(row > 0) {
 				System.out.println("updated row");
 				
-				Customer fetchCustomer = Customer.fetchCustomerDetails(userName);
+				Customer fetchCustomer = Customer.CustomerDetails(userName);
 				return fetchCustomer;
 			}
 			
@@ -439,6 +398,7 @@ public class Customer {
 //			change datatype to bigdecimal
 			BigDecimal transferAmountToDecimal = new BigDecimal(transferAmount);
 			
+			// Check to see if transfer amount exceeds balance
 			if(transferAmountToDecimal.compareTo(senderBalance) > 0) {
 				System.out.println("transfer amount greater than sender balance");
 				return 3;
@@ -458,6 +418,7 @@ public class Customer {
 				pstmt.setString(2, rUserName);
 				int row2 = pstmt.executeUpdate();
 				if(row2 > 0) {
+					// Update transaction table
 					boolean addTransaction = Customer.addTransaction(cusUserName, rUserName, transferAmount);
 					if(addTransaction) {
 						return 1;
@@ -469,6 +430,42 @@ public class Customer {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public static BigDecimal fetchBalance(String userName) {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet res = null;
+		PreparedStatement pstmt = null;
+		try {
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+			System.out.println("Driver loaded successfully");
+			
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
+			System.out.println("Connection establised successfully!!");
+			
+			// store sql command into s
+			String s = "select * from customer_details where username=?";
+			// Allows sql to return statement
+			pstmt = con.prepareStatement(s);
+			pstmt.setString(1, userName);
+			// I want to return the result from s
+			res = pstmt.executeQuery();
+			System.out.println("before res.next");
+			if(res.next()) {
+				System.out.println("res.next working");
+//				Need to convert string to bigdecimal first
+				String balance = res.getString(9);
+				BigDecimal balanceToDecimal = new BigDecimal(balance);
+				System.out.println("in fetchBalance method: " + balance);
+				return balanceToDecimal;
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static boolean addTransaction(String cusUserName, String rUserName, String amount) {
@@ -484,12 +481,9 @@ public class Customer {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", "admin");
 			System.out.println("Connection establised successfully!!");
 			
-//			store sql command into s
 			String s = "insert into transaction(sender, sendee, amount, datetime) values(?,?,?,?)";
-// 			Allows sql to return statement
+
 			pstmt = con.prepareStatement(s);
-// 			I want to return the result from s
-//			res = stmt.executeQuery(s);
 			pstmt.setString(1, cusUserName);
 			pstmt.setString(2, rUserName);
 			pstmt.setString(3, amount);

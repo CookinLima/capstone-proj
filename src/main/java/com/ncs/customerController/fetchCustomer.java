@@ -19,7 +19,7 @@ public class fetchCustomer extends HttpServlet {
 		HttpSession session = req.getSession(true);
 		String cusUserName = (String) session.getAttribute("cusUserName");
 	
-		Customer fetchCustomer = Customer.fetchCustomerDetails(cusUserName);
+		Customer fetchCustomer = Customer.CustomerDetails(cusUserName);
 		System.out.println(cusUserName);
 		if(fetchCustomer != null) {
 			session.setAttribute("customerDetails", fetchCustomer);

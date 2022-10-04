@@ -21,6 +21,7 @@ public class Loan {
 	private String occupation;
 	private BigDecimal income;
 	private int duration;
+	private String reason;
 	
 	
 	public int getId() {
@@ -89,6 +90,12 @@ public class Loan {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 	
 	public Loan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
 			int approve, String occupation, BigDecimal income, int duration) {
@@ -107,6 +114,27 @@ public class Loan {
 	public static Loan createLoan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
 			int approve, String occupation, BigDecimal income, int duration) {
 		return new Loan(id,loanName, userName, principal, totalIR, annualIR, approve, occupation, income, duration);
+	}
+	
+	public Loan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
+			int approve, String occupation, BigDecimal income, int duration, String reason) {
+		super();
+		this.id = id;
+		this.loanName = loanName;
+		this.userName = userName;
+		this.principal = principal;
+		this.totalIR = totalIR;
+		this.annualIR = annualIR;
+		this.approve = approve;
+		this.occupation = occupation;
+		this.income = income;
+		this.duration = duration;
+		this.reason = reason;
+	}
+	
+	public static Loan createLoan(int id, String loanName, String userName, BigDecimal principal, BigDecimal totalIR, BigDecimal annualIR,
+			int approve, String occupation, BigDecimal income, int duration, String reason) {
+		return new Loan(id,loanName, userName, principal, totalIR, annualIR, approve, occupation, income, duration, reason);
 	}
 	
 	public static int getLoan(String cusUserName, String loanName, String principal, String duration, String annualInterest, String totalInterest, String occupation, String income) {
@@ -245,9 +273,10 @@ public class Loan {
 				String occupation = res.getString(10);
 				String income = res.getString(11);
 				BigDecimal incomeToDecimal = new BigDecimal(income);
+				String reason = res.getString(12);
 				
 				Loan fetchLoans = Loan.createLoan(id,loanName, username, principalSumToDecimal, totalIRToDecimal, 
-						annualIRToDecimal, approve, occupation, incomeToDecimal, duration);
+						annualIRToDecimal, approve, occupation, incomeToDecimal, duration, reason);
 				loans.add(fetchLoans);
 			}
 			
@@ -420,7 +449,7 @@ public class Loan {
 		return false;
 	}
 	
-	public static boolean rejectLoan(String loanId) {
+	public static boolean rejectLoan(String loanId, String reason) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet res = null;
@@ -433,12 +462,13 @@ public class Loan {
 			System.out.println("Connection establised successfully!!");
 			
 			// store sql command into s
-			String s = "update loan set approve=? where id=?";
+			String s = "update loan set approve=?, reason=? where id=?";
 			// Allows sql to return statement
 			pstmt = con.prepareStatement(s);
 			pstmt.setInt(1, 2);
+			pstmt.setString(2, reason);
 			int loanIdToInt = Integer.parseInt(loanId);
-			pstmt.setInt(2, loanIdToInt);
+			pstmt.setInt(3, loanIdToInt);
 			
 			int row = pstmt.executeUpdate();
 			if(row > 0) {
